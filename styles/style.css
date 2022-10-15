@@ -141,6 +141,17 @@ a {
     overflow-y: auto;
 }
 
+.header .cart-items-container form .cart-message {
+ 
+  width: 22rem;
+  padding: 2rem;
+  font-size: 1.7rem;
+  color: #fff;
+  text-transform: none;
+  background-color: transparent;
+  resize: none;
+}
+
 .header .cart-items-container::-webkit-scrollbar {
     width: 0.8rem;
     background-color: #fff;
@@ -195,6 +206,10 @@ a {
     font-size: 1.5rem;
     color: var(--black-color);
 }
+.header .cart-items-container .cart-item .content .total {
+    font-size: 2.5rem;
+    color: var(--main-color);
+}
 
 .header .cart-items-container .btn {
     width: 100%;
@@ -241,7 +256,7 @@ a {
 /* menu start */
 .menu .box-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
     gap: 1.5rem;
 }
 
@@ -250,7 +265,7 @@ a {
     background-color: #fff;
     border-radius: 3rem;
     background-color: #fff;
-    min-height: 60rem;
+    min-height: 55rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -260,6 +275,7 @@ a {
 .menu .box-container .box img {
     width: 100%;
     object-fit: cover;
+    padding: 0;
 }
 
 .menu .box-container .box .menu-category {
@@ -297,7 +313,7 @@ a {
     background-color: #fff;
     position: relative;
     border-radius: 3rem;
-    height: 50rem;
+    height: 55rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -507,13 +523,13 @@ a {
 .contact .row form .inputBox input {
     width: 100%;
     padding: 2rem;
-    font-size: 1.7rem;
+    font-size: 1.7rem; 
     color: #fff;
     text-transform: none;
     background-color: transparent;
 }
 
-.contact .row form .inputBox textarea {
+.contact .row form .inputBox .message {
     width: 100%;
     padding: 2rem;
     font-size: 1.7rem;
@@ -618,7 +634,7 @@ a {
         position: absolute;
         top: 95%;
         background-color: #fff;
-        height: calc(60vh - 9rem);
+        height: calc(35vh - 9rem);
         width: 30rem;
         box-shadow: 0px 20px 14px 0px rgba(0 0 0 / 75%);
         right: -100%;

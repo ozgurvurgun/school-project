@@ -16,19 +16,17 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="" class="logo">
+    <a href="index.php" class="logo">
       <img src="logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
-      <a href="#gruplar">Gruplar</a>
-      <a href="#menu">Menü</a>
-      <a href="#iletisim">İletişim</a>
-      <a href="#isbirligi">İş Birliği</a>
+      <a href="index.php">Gruplar</a>
+      <a href="pages/contact.php">İletişim</a>
     </nav>
     <div class="buttons">
       <button id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
-          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">+9</span>
+          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">6</span>
         </i>
       </button>
       <button id="menu-btn">
@@ -40,35 +38,59 @@
         <i class="fas fa-times"></i>
         <img src="images/nargilejpg.jpg" alt="menu">
         <div class="content">
-          <h3>cart item 01</h3>
-          <div class="price">$15.99</div>
+          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
+          <div class="price">140₺</div>
         </div>
       </div>
       <div class="cart-item">
         <i class="fas fa-times"></i>
         <img src="images/nargilejpg.jpg" alt="menu">
         <div class="content">
-          <h3>cart item 02</h3>
-          <div class="price">$15.99</div>
+          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
+          <div class="price">220₺</div>
         </div>
       </div>
       <div class="cart-item">
         <i class="fas fa-times"></i>
         <img src="images/nargilejpg.jpg" alt="menu">
         <div class="content">
-          <h3>cart item 03</h3>
-          <div class="price">$15.99</div>
+          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
+          <div class="price">110₺</div>
         </div>
       </div>
       <div class="cart-item">
         <i class="fas fa-times"></i>
         <img src="images/nargilejpg.jpg" alt="menu">
         <div class="content">
-          <h3>cart item 04</h3>
-          <div class="price">$15.99</div>
+          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span></h3>
+          <div class="price">110₺</div>
         </div>
       </div>
-
+      <div class="cart-item">
+        <img src="images/TL-simgesi.png" alt="menu">
+        <div class="content">
+          <h3>TOPLAM</h3>
+          <div class="total">580₺</div>
+        </div>
+      </div>
+      <!-- message -->
+      <section class="contact" id="iletisim">
+        <h1 class="heading"><span></span></h1>
+        <div class="row">
+          <!-- <iframe class="map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12509.690116774513!2d27.174708999999996!3d38.385478400000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b962008df5f553%3A0x43d9912a7a1c582a!2zQnVjYSwgRHVtbHVwxLFuYXIsIDM1NDAwIEJ1Y2EgT3NiL0J1Y2EvxLB6bWly!5e0!3m2!1str!2str!4v1665444363002!5m2!1str!2str"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe> -->
+          <form>
+            <h3>Notunuz</h3>
+            <div class="inputBox">
+              <i class="fa-solid fa-pencil"></i>
+              <textarea style="background-color:#0e0e0e;color:#fff;" class="cart-message" name="" rows="5" placeholder="" id=""></textarea>
+            </div>
+          </form>
+        </div>
+      </section>
+      <!-- message -->
       <a href=" #" class="btn">siparişi Ver</a>
     </div>
   </header>
@@ -93,7 +115,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Nakhla</a>
+          <p class="name">Nakhla</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -104,7 +126,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/nakhla.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -113,7 +135,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Al fakher</a>
+          <p class="name">Al fakher</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -124,7 +146,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/alfakher.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -133,7 +155,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Adalya</a>
+          <p class="name">Adalya</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -144,7 +166,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/adalya.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -153,7 +175,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Best Couple</a>
+          <p class="name">Best Couple</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -164,7 +186,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/bestcouple.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -173,7 +195,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Truepassion</a>
+          <p class="name">Truepassion</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -184,7 +206,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/truepassion.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -193,7 +215,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Daim</a>
+          <p class="name">Daim</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -204,7 +226,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/daim.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -213,7 +235,7 @@
       <div class="box dark-bg">
         <div class="box-head">
           <span class="title">text</span>
-          <a href="#" class="name">Fumari</a>
+          <p class="name">Fumari</p>
         </div>
         <div class="image">
           <img src="images/nargilejpg.jpg" alt="" />
@@ -224,7 +246,7 @@
             <span class="amoumt">text</span>
           </div>
           <div class="product-btn">
-            <a href="#">
+            <a href="pages/fumari.php">
               <i class="fas fa-plus"></i>
             </a>
           </div>
@@ -286,38 +308,6 @@
     </div>
   </section>
   <!-- review end -->
-
-  <!-- contact start -->
-  <section class="contact" id="iletisim">
-    <h1 class="heading"><span></span></h1>
-    <div class="row">
-      <!-- <iframe class="map"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12509.690116774513!2d27.174708999999996!3d38.385478400000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b962008df5f553%3A0x43d9912a7a1c582a!2zQnVjYSwgRHVtbHVwxLFuYXIsIDM1NDAwIEJ1Y2EgT3NiL0J1Y2EvxLB6bWly!5e0!3m2!1str!2str!4v1665444363002!5m2!1str!2str"
-        loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      </iframe> -->
-      <form>
-        <h3>iletişim</h3>
-        <div class="inputBox">
-          <i class="fas fa-user"></i>
-          <input type="text" placeholder="ad soyad">
-        </div>
-        <div class="inputBox">
-          <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="mail">
-        </div>
-        <div class="inputBox">
-          <i class="fas fa-phone"></i>
-          <input type="number" placeholder="telefon">
-        </div>
-        <div class="inputBox">
-          <i class="fa-solid fa-envelope"></i>
-          <textarea class="" name="" rows="3" placeholder="mesajınız"></textarea>
-        </div>
-        <input type="submit" value="gönder" class="btn">
-      </form>
-    </div>
-  </section>
-  <!-- contact end -->
 
   <!-- footer start -->
   <section class="footer">

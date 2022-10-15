@@ -5,7 +5,6 @@ const navbar = document.querySelector(".navbar");
 const cartbtn = document.querySelector("#cart-btn");
 const menuBtn = document.querySelector("#menu-btn");
 
-
 cartbtn.addEventListener("click",function(){
     cartItem.classList.toggle("active");
     document.addEventListener("click",function(e){
@@ -14,8 +13,6 @@ cartbtn.addEventListener("click",function(){
         }
     })
 });
-
-
 menuBtn.addEventListener("click",function(){
     navbar.classList.toggle("active");
     document.addEventListener("click",function(e){
