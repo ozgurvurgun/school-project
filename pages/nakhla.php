@@ -14,8 +14,8 @@
 </head>
 
 <body>
- <!-- header start -->
- <header class="header">
+  <!-- header start -->
+  <header class="header">
     <a href="index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
@@ -26,51 +26,21 @@
     <div class="buttons">
       <button id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
-          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">6</span>
+          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">0</span>
         </i>
       </button>
       <button id="menu-btn">
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+    <div id="shop-kapsayici" class="cart-items-container">
+      <div id="shop-kapsayici2"></div>
+
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->
@@ -106,10 +76,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>vişne</h3>
-          <div class="price">140₺ <span>199.99₺</span></div>
+          <div class="price"><span id="visne_fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="visne_add" class="btn">sepete ekle</button>
         </div>
       </div>
       <div class="box">
@@ -117,27 +87,25 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>şeftali</h3>
-          <div class="price">110₺ <span>179.99₺</span></div>
+          <div class="price">110₺ <span class="span">179.99₺</span></div>
         </div>
         <div class="box-bottom">
           <a href="#" class="btn">sepete ekle</a>
         </div>
       </div>
-      
-      
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>cappucino</h3>
-          <div class="price">110₺ <span>179.99₺</span></div>
+          <div class="price">110₺ <span class="span">179.99₺</span></div>
         </div>
         <div class="box-bottom">
           <a href="#" class="btn">sepete ekle</a>
         </div>
       </div>
 
-      
+
     </div>
   </section>
   <!-- menu end -->

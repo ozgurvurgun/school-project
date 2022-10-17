@@ -185,6 +185,7 @@ a {
 
 .header .cart-items-container .cart-item .fa-times {
     position: absolute;
+    background-color: transparent;
     top: 1rem;
     right: 1.5rem;
     font-size: 2rem;
@@ -293,7 +294,13 @@ a {
     padding: 0.5rem 0;
 }
 
-.menu .box-container .box .price span {
+.menu .box-container .box .price .span {
+    font-size: 1.5rem;
+    text-decoration: line-through;
+    font-weight: 300;
+}
+
+.menu .box-container .box .price .fiyat {
     font-size: 1.5rem;
     text-decoration: line-through;
     font-weight: 300;
