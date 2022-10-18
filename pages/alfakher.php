@@ -26,7 +26,7 @@
     <div class="buttons">
       <button id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
-          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">6</span>
+          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
         </i>
       </button>
       <button id="menu-btn">

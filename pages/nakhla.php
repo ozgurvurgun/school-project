@@ -26,16 +26,18 @@
     <div class="buttons">
       <button id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
-          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item">0</span>
+          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item item-count"></span>
         </i>
       </button>
       <button id="menu-btn">
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div id="shop-kapsayici" class="cart-items-container">
-      <div id="shop-kapsayici2"></div>
 
+    <div id="shop-kapsayici" class="cart-items-container">
+      <div id="shop-kapsayici-visne"></div>
+      <div id="shop-kapsayici-seftali"></div>
+      <div id="shop-kapsayici-cappucino"></div>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
@@ -82,26 +84,32 @@
           <button type="button" id="visne_add" class="btn">sepete ekle</button>
         </div>
       </div>
+
+
+
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>şeftali</h3>
-          <div class="price">110₺ <span class="span">179.99₺</span></div>
+          <div class="price"><span id="seftali_fiyat">110</span>₺&nbsp;<span class="span">179.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="seftali_add" class="btn">sepete ekle</button>
         </div>
       </div>
+
+
+
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>cappucino</h3>
-          <div class="price">110₺ <span class="span">179.99₺</span></div>
+          <div class="price"><span id="cappucino_fiyat">110</span>₺&nbsp;<span class="span">179.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button type="button" id="cappucino_add" class="btn">sepete ekle</button>
         </div>
       </div>
 
