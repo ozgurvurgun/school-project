@@ -2,21 +2,21 @@
 <html lang="tr">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="../logo-images/icons/smoking-solid.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!--bootstrap css start-->
-    <!--bootstrap css end-->
-    <link rel="stylesheet" href="../styles/style.css" />
-    <title>Dejavu Hookah</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../logo-images/icons/smoking-solid.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!--bootstrap css start-->
+  <!--bootstrap css end-->
+  <link rel="stylesheet" href="../styles/style.css" />
+  <title>Dejavu Hookah</title>
 </head>
 
 <body>
-    <!-- header start -->
+  <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+  <a href="../index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
@@ -26,51 +26,23 @@
     <div class="buttons">
       <button id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
-        <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
+          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
         </i>
       </button>
       <button id="menu-btn">
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+
+
+
+    <div id="shop-kapsayici" class="cart-items-container">
+      <?php require "container.php"; ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->
@@ -97,104 +69,106 @@
   <!-- header end -->
 
 
-    <!-- menu start -->
-    <section class="menu" id="menu">
-        <h1 class="heading">da<span>im</span></h1>
-        <div class="box-container">
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>dejavu</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>dondruma</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>tatlı cadı</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>yeşil elma</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>limon buz</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>sakız nane</h3>
-                    <div class="price">100₺ <span>159.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
+  <!-- menu start -->
+  <section class="menu" id="menu">
+    <h1 class="heading">da<span>im</span></h1>
+    <div class="box-container">
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>dejavu</h3>
+          <div class="price"><span id="daim-dejavu-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
         </div>
-    </section>
-    <!-- menu end -->
+        <div class="box-bottom">
+          <button type="button" id="daim-dejavu-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>dondruma</h3>
+          <div class="price"><span id="daim-dondurma-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="daim-dondurma-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>tatlı cadı</h3>
+          <div class="price"><span id="daim-tatlicadi-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="daim-tatlicadi-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>yeşil elma</h3>
+          <div class="price"><span id="daim-yesilelma-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="daim-yesilelma-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>limon buz</h3>
+          <div class="price"><span id="daim-limonbuz-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="daim-limonbuz-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>sakız nane</h3>
+          <div class="price"><span id="daim-sakiznane-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="daim-sakiznane-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- menu end -->
 
-    <!-- footer start -->
-    <section class="footer">
-        <!-- <div class="search">
+  <!-- footer start -->
+  <section class="footer">
+    <!-- <div class="search">
       <input type="text" class="search-input" placeholder="search">
       <button class="btn btn-primary">search</button>
     </div> -->
-        <div class="share">
-            <a href="#" class="fab fa-facebook"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-        </div>
-        <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
-    </section>
-    <!-- footer end -->
+    <div class="share">
+      <a href="#" class="fab fa-facebook"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+    </div>
+    <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
+  </section>
+  <!-- footer end -->
 
-    <!--my js library start-->
-    <script src="../js/script.js"></script>
-    <!--my js library end-->
+  <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onload-total-values.js"></script>
+  <script src="../js/script.js"></script>
+  <!--my js library end-->
 
-    <!--bootstrap js start-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <!--bootstrap js start-->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script> -->
-    <!--bootstrap js end-->
+  <!--bootstrap js end-->
 </body>
 
 </html>

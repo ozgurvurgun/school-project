@@ -16,7 +16,7 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
@@ -33,44 +33,41 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+    <!-- GLOBAL VALUES START -->
+    <!-- script.js dosyam da her saufadan ayrı ayrı çektiğim id değerleri ve onclik işlemleri bulunuyor. dosyalar arası gezerken değerler ve bulunamadığından hata alıyordum -->
+    <!-- bu yüzden display none ile gizleyerek ihtiyacım olan değerleri her sayfaya ekledim. (bu böyle olmaz bu tarz verileri bir yerde depo etmelisin) -->
+    <section style="display: none;" class="menu" id="menu">
+
+      <!--NAKHLA VALUES START-->
+      <div class="price"><span id="visne_fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
+      <button type="button" id="visne_add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="seftali_fiyat">110</span>₺&nbsp;<span class="span">179.99₺</span></div>
+      <button type="button" id="seftali_add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="cappucino_fiyat">110</span>₺&nbsp;<span class="span">179.99₺</span></div>
+      <button type="button" id="cappucino_add" class="btn">sepete ekle</button>
+      <!--NAKHLA VALUES END-->
+
+      <!--ALFAKHER VALUES START-->
+      <div class="price"><span id="alfakher-uzum-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-uzum-add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="alfakher-kavun-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-kavun-add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="alfakher-ciftelma-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-ciftelma-add" class="btn">sepete ekle</button>
+      <!--ALFAKHER VALUES END-->
+    </section>
+    <!-- GLOBAL VALUES END -->
+    <div id="shop-kapsayici" class="cart-items-container">
+      <?php require "container.php"; ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->
@@ -105,10 +102,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>pln</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-pln-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-pln-add" class="btn">sepete ekle</button>
         </div>
       </div>
       <div class="box">
@@ -116,23 +113,22 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>bakü</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-baku-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-baku-add" class="btn">sepete ekle</button>
         </div>
       </div>
-
 
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>lady</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-lady-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-lady-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -141,10 +137,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>love 66</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-lovesixsix-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-lovesixsix-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -153,10 +149,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>merlin</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-merlin-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-merlin-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -166,10 +162,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>berlin</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-berlin-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-berlin-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -179,10 +175,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>moskow</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-moskow-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button type="button" id="adalya-moskow-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -191,10 +187,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>ice bonbon</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-icebonbon-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button type="button" id="adalya-icebonbon-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -204,10 +200,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>izmir romantik</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="adalya-izromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button type="button" id="adalya-izromantik-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -232,7 +228,10 @@
   <!-- footer end -->
 
   <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onload-total-values.js"></script>
   <script src="../js/script.js"></script>
+  
   <!--my js library end-->
 
   <!--bootstrap js start-->

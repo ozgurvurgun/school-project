@@ -16,7 +16,7 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+  <a href="../index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
@@ -33,39 +33,11 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+
+
+
+    <div id="shop-kapsayici" class="cart-items-container">
+    <?php require "container.php"; ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
@@ -106,34 +78,35 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>üzüm-nane</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-uzumnane-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+          <button id="bestcouple-uzumnane-add" class="btn">sepete ekle</button>
         </div>
       </div>
+
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>üzüm-vişne</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-uzumvisne-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-uzumvisne-add" class="btn">sepete ekle</button>
         </div>
       </div>
-      
-      
+
+
       <div class="box">
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>üzüm-yaban</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-uzumyaban-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-uzumyaban-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -142,10 +115,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>elma-nane</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-elmanane-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-elmanane-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -154,10 +127,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>karpuz-çilek</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-karpuzcilek-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-karpuzcilek-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -167,10 +140,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>limon-çilek</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-limoncilek-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-limoncilek-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -180,10 +153,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>şeftali-kavun</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-seftalikavun-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-seftalikavun-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -192,10 +165,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>vanilya-karamel</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-vanilyakaramel-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-vanilyakaramel-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -205,14 +178,14 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>bluemist-böğürtlen</h3>
-          <div class="price">100₺ <span>169.99₺</span></div>
+          <div class="price"><span id="bestcouple-bluemistbogurtlen-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <a href="#" class="btn">sepete ekle</a>
+        <button id="bestcouple-bluemistbogurtlen-add" class="btn">sepete ekle</button>
         </div>
       </div>
 
-      
+
     </div>
   </section>
   <!-- menu end -->
@@ -233,6 +206,8 @@
   <!-- footer end -->
 
   <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onload-total-values.js"></script>
   <script src="../js/script.js"></script>
   <!--my js library end-->
 

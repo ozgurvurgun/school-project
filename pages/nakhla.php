@@ -16,7 +16,7 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
@@ -33,11 +33,31 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
+    <!-- GLOBAL VALUES START -->
+    <!-- script.js dosyam da her saufadan ayrı ayrı çektiğim id değerleri ve onclik işlemleri bulunuyor. dosyalar arası gezerken değerler ve bulunamadığından hata alıyordum -->
+    <!-- bu yüzden display none ile gizleyerek ihtiyacım olan değerleri her sayfaya ekledim. (bu böyle olmaz bu tarz verileri bir yerde depo etmelisin) -->
+    <section style="display: none;" class="menu" id="menu">
+
+
+
+      <!--ALFAKHER VALUES START-->
+      <div class="price"><span id="alfakher-uzum-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-uzum-add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="alfakher-kavun-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-kavun-add" class="btn">sepete ekle</button>
+
+      <div class="price"><span id="alfakher-ciftelma-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+      <button type="button" id="alfakher-ciftelma-add" class="btn">sepete ekle</button>
+      <!--ALFAKHER VALUES END-->
+
+
+    </section>
+    <!-- GLOBAL VALUES END -->
 
     <div id="shop-kapsayici" class="cart-items-container">
-      <div id="shop-kapsayici-visne"></div>
-      <div id="shop-kapsayici-seftali"></div>
-      <div id="shop-kapsayici-cappucino"></div>
+      <?php require "container.php";
+      ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
@@ -109,7 +129,7 @@
           <div class="price"><span id="cappucino_fiyat">110</span>₺&nbsp;<span class="span">179.99₺</span></div>
         </div>
         <div class="box-bottom">
-        <button type="button" id="cappucino_add" class="btn">sepete ekle</button>
+          <button type="button" id="cappucino_add" class="btn">sepete ekle</button>
         </div>
       </div>
 
@@ -134,6 +154,8 @@
   <!-- footer end -->
 
   <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onload-total-values.js"></script>
   <script src="../js/script.js"></script>
   <!--my js library end-->
 

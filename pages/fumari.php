@@ -2,21 +2,21 @@
 <html lang="tr">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="../logo-images/icons/smoking-solid.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!--bootstrap css start-->
-    <!--bootstrap css end-->
-    <link rel="stylesheet" href="../styles/style.css" />
-    <title>Dejavu Hookah</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../logo-images/icons/smoking-solid.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!--bootstrap css start-->
+  <!--bootstrap css end-->
+  <link rel="stylesheet" href="../styles/style.css" />
+  <title>Dejavu Hookah</title>
 </head>
 
 <body>
-    <!-- header start -->
+  <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+    <a href="../index.php" class="logo">
       <img src="../logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
@@ -33,44 +33,17 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="../images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+
+
+
+
+    <div id="shop-kapsayici" class="cart-items-container">
+      <?php require "container.php"; ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->
@@ -97,93 +70,95 @@
   <!-- header end -->
 
 
-    <!-- menu start -->
-    <section class="menu" id="menu">
-        <h1 class="heading">fu<span>mari</span></h1>
-        <div class="box-container">
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>gummi bear red&white</h3>
-                    <div class="price">140₺ <span>199.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>mojito mojo</h3>
-                    <div class="price">140₺ <span>199.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>mochaccino</h3>
-                    <div class="price">140₺ <span>199.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>ice cream</h3>
-                    <div class="price">140₺ <span>199.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-head">
-                    <img src="../images/nargilejpg.jpg" alt="menu" />
-                    <span class="menu-category"></span>
-                    <h3>surprise</h3>
-                    <div class="price">140₺ <span>199.99₺</span></div>
-                </div>
-                <div class="box-bottom">
-                    <a href="#" class="btn">sepete ekle</a>
-                </div>
-            </div>
+  <!-- menu start -->
+  <section class="menu" id="menu">
+    <h1 class="heading">fu<span>mari</span></h1>
+    <div class="box-container">
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>gummi bear red&white</h3>
+          <div class="price"><span id="fumari-gummibear-fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
         </div>
-    </section>
-    <!-- menu end -->
+        <div class="box-bottom">
+          <button type="button" id="fumari-gummibear-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>mojito mojo</h3>
+          <div class="price"><span id="fumari-mojitomojo-fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="fumari-mojitomojo-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>mochaccino</h3>
+          <div class="price"><span id="fumari-mochaccino-fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="fumari-mochaccino-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>ice cream</h3>
+          <div class="price"><span id="fumari-icecream-fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="fumari-icecream-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-head">
+          <img src="../images/nargilejpg.jpg" alt="menu" />
+          <span class="menu-category"></span>
+          <h3>surprise</h3>
+          <div class="price"><span id="fumari-surprise-fiyat">140</span>₺&nbsp;<span class="span">199.99₺</span></div>
+        </div>
+        <div class="box-bottom">
+          <button type="button" id="fumari-surprise-add" class="btn">sepete ekle</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- menu end -->
 
-    <!-- footer start -->
-    <section class="footer">
-        <!-- <div class="search">
+  <!-- footer start -->
+  <section class="footer">
+    <!-- <div class="search">
       <input type="text" class="search-input" placeholder="search">
       <button class="btn btn-primary">search</button>
     </div> -->
-        <div class="share">
-            <a href="#" class="fab fa-facebook"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-        </div>
-        <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
-    </section>
-    <!-- footer end -->
+    <div class="share">
+      <a href="#" class="fab fa-facebook"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+    </div>
+    <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
+  </section>
+  <!-- footer end -->
 
-    <!--my js library start-->
-    <script src="../js/script.js"></script>
-    <!--my js library end-->
+  <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onload-total-values.js"></script>
+  <script src="../js/script.js"></script>
+  <!--my js library end-->
 
-    <!--bootstrap js start-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <!--bootstrap js start-->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script> -->
-    <!--bootstrap js end-->
+  <!--bootstrap js end-->
 </body>
 
 </html>

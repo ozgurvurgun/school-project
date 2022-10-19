@@ -33,44 +33,16 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="cart-items-container">
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>vişne&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">140₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>şeftali&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">2</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">220₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>cappucino&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span> </h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
-      <div class="cart-item">
-        <i class="fas fa-times"></i>
-        <img src="images/nargilejpg.jpg" alt="menu">
-        <div class="content">
-          <h3>bluemist-böğürtlen&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">1</span><span style="color: red;font-size:medium">&nbsp;adet</span></h3>
-          <div class="price">110₺</div>
-        </div>
-      </div>
+    <?php require "pages/globalvalue.php";
+     ?>
+    <div id="shop-kapsayici" class="cart-items-container">
+    <?php require "pages/container.php";
+     ?>
       <div class="cart-item">
         <img src="images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->
@@ -325,6 +297,8 @@
   <!-- footer end -->
 
   <!--my js library start-->
+  <script src="js/response.js"></script>
+  <script src="js/onload-total-values.js"></script>
   <script src="js/script.js"></script>
   <!--my js library end-->
 
