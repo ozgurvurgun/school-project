@@ -85,8 +85,8 @@
    <div class="price"><span id="adalya-icebonbon-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
    <button type="button" id="adalya-icebonbon-add" class="btn">sepete ekle</button>
 
-   <div class="price"><span id="adalya-izromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
-   <button type="button" id="adalya-izromantik-add" class="btn">sepete ekle</button>
+   <div class="price"><span id="adalya-izmirromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+   <button type="button" id="adalya-izmirromantik-add" class="btn">sepete ekle</button>
    <!--ADALYA VALUES END-->
 
    <!--TRUEPASSION VALUES START-->
@@ -155,7 +155,7 @@
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
           <h3>TOPLAM</h3>
-          <div class="total">580₺</div>
+          <div class="total"><span id="total">0</span>₺</div>
         </div>
       </div>
       <!-- message -->

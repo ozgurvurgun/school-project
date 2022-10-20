@@ -293,10 +293,10 @@
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
           <h3>izmir romantik</h3>
-          <div class="price"><span id="adalya-izromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+          <div class="price"><span id="adalya-izmirromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
         </div>
         <div class="box-bottom">
-          <button type="button" id="adalya-izromantik-add" class="btn">sepete ekle</button>
+          <button type="button" id="adalya-izmirromantik-add" class="btn">sepete ekle</button>
         </div>
       </div>
 

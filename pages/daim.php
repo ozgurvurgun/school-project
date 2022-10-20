@@ -85,8 +85,8 @@
    <div class="price"><span id="adalya-icebonbon-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
    <button type="button" id="adalya-icebonbon-add" class="btn">sepete ekle</button>
 
-   <div class="price"><span id="adalya-izromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
-   <button type="button" id="adalya-izromantik-add" class="btn">sepete ekle</button>
+   <div class="price"><span id="adalya-izmirromantik-fiyat">100</span>₺&nbsp;<span class="span">169.99₺</span></div>
+   <button type="button" id="adalya-izmirromantik-add" class="btn">sepete ekle</button>
    <!--ADALYA VALUES END-->
 
    <!--BESTCOUPLE VALUES START-->
@@ -209,7 +209,7 @@
         <div class="box-head">
           <img src="../images/nargilejpg.jpg" alt="menu" />
           <span class="menu-category"></span>
-          <h3>dondruma</h3>
+          <h3>dondurma</h3>
           <div class="price"><span id="daim-dondurma-fiyat">100</span>₺&nbsp;<span class="span">159.99₺</span></div>
         </div>
         <div class="box-bottom">
