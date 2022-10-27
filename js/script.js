@@ -2510,7 +2510,6 @@ function decreasefumariicecream() {
 }
 //////////////FUMARI.PHP ICE CREAM END
 
-
 //////////////FUMARI.PHP SURPRISE START
 const fumarisurprise = document.querySelector("#fumari-surprise-add");
 const fumarisurpriseFiyat = Number(document.querySelector("#fumari-surprise-fiyat").innerHTML);
@@ -2571,26 +2570,3 @@ function decreasefumarisurprise() {
     }
 }
 //////////////FUMARI.PHP SURPRISE END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
