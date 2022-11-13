@@ -12,7 +12,6 @@ url = window.location.pathname;
 if (url === "/dejavu_hookah/pages/nakhla.php") {
     //alert(window.location.pathname)
 }
-
 //////////////NAKHLA.PHP VISNE START
 const visne = document.querySelector("#visne_add");
 const visneFiyat = Number(document.querySelector("#visne_fiyat").innerHTML);
@@ -37,7 +36,7 @@ function toListVisne(par) {
     localStorage.setItem("visneAdet", visneAdet);
     document.getElementById("shop-kapsayici-nakhla-visne").innerHTML =
         '<div class="cart-item">' +
-        '<button  type="button" class="fas fa-times" onclick="decreaseVisne();"></button>' +
+        '<button  type="button" class="fas fa-times" onclick="decrease();"></button>' +
         '<img src="' + imgPage + '" alt="menu">' +
         '<div class="content">' +
         '<h3>' + localStorage.getItem("visneName") + '&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;' + localStorage.getItem("visneAdet") + '</span> </h3>' +

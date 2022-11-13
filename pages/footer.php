@@ -1,6 +1,6 @@
 <?php
 
-if ($_SERVER['REQUEST_URI'] === "/dejavu_hookah/index.php") { ?>
+if ($_SERVER['REQUEST_URI'] === "/dejavu_hookah/index.php"|| $_SERVER['REQUEST_URI'] == "/dejavu_hookah/") { ?>
     <!-- footer start -->
     <section class="footer">
         <!-- <div class="search">
