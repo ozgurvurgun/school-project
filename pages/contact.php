@@ -1,3 +1,9 @@
+<?php
+require_once '../security/security.php';
+require_once '../DB/database.php';
+
+use dejavu_hookah\db\Database as db;
+?>
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -16,12 +22,12 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="../index.php" class="logo">
+    <a href="javascript:void(0)" class="logo">
       <img src="../images/logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
-      <a href="../index.php">Gruplar</a>
-      <a href="contact.php">İletişim</a>
+      <a href="https://ozgurvurgun.com/dejavu_hookah/?table=<?= $_GET['table'] ?>">Gruplar</a>
+      <a href="https://ozgurvurgun.com/dejavu_hookah/pages/contact.php?table=<?= $_GET['table'] ?>">İletişim</a>
     </nav>
     <div class="buttons">
       <button id="cart-btn">
@@ -33,10 +39,16 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <?php require "../pages/globalvalue.php";
-    ?>
+    <!-- GLOBAL VALUES START -->
+    <!-- Her sayfadan silme ekleme işlemi yapmak için alanların id lerine ihtiyaç oluyor. bu kurgu kabul edilemez json la falan yapmak daha sağlıklı olur gibi -->
+    <section style="display: none;" class="menu" id="menu">
+      <?php require "globalValue.php"; ?>
+    </section>
+    <!-- GLOBAL VALUES END -->
+
+
     <div class="cart-items-container">
-      <?php require "../pages/container.php";
+      <?php require "container.php";
       ?>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
@@ -80,23 +92,84 @@
         <h3>iletişim</h3>
         <div class="inputBox">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="ad soyad">
+          <input type="text" placeholder="ad soyad" name="nameSurname" required>
         </div>
         <div class="inputBox">
           <i class="fas fa-envelope"></i>
-          <input type="email" placeholder="mail">
+          <input type="email" placeholder="mail" name="email" required>
         </div>
         <div class="inputBox">
           <i class="fas fa-phone"></i>
-          <input type="number" placeholder="telefon">
+          <input type="text" placeholder="phone" name="phone" required>
         </div>
         <div class="inputBox">
           <i class="fas fa-envelope"></i>
-          <textarea style="background-color: #0e0e0e;padding:2rem;color:#fff;font-size:1.7rem;" class="message" name="" rows="5" placeholder="mesajınız" id=""></textarea>
+          <textarea style="background-color: #0e0e0e;padding:2rem;color:#fff;font-size:1.7rem;" class="message" name="message" rows="5" placeholder="mesajınız" required></textarea>
         </div>
-        <input type="submit" value="gönder" class="btn">
+        <input type="submit" value="gönder" name="sendContact" class="btn">
       </form>
     </div>
   </section>
   <!-- contact end -->
-  <?php require "footer.php"; ?>
+
+
+  <!-- footer start -->
+  <section class="footer">
+    <!-- <div class="search">
+      <input type="text" class="search-input" placeholder="search">
+      <button class="btn btn-primary">search</button>
+    </div> -->
+    <div class="share">
+      <a href="#" class="fab fa-facebook"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+    </div>
+    <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
+  </section>
+  <!-- footer end -->
+
+  <!--my js library start-->
+  <script src="../js/response.js"></script>
+  <script src="../js/onloadGetValue.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/modal.js"></script>
+  <!--my js library end-->
+  <!--bootstrap js start-->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script> -->
+  <!--bootstrap js end-->
+</body>
+
+</html>
+
+
+<?php
+if (isset($_POST["sendContact"])) {
+  $table = trim($_GET["table"]);
+  $name = security("nameSurname");
+  $mail = security("email");
+  $phone = security("phone");
+  $message = security("message");
+  $IP = $_SERVER["REMOTE_ADDR"];
+
+  $db = new db;
+  $query = $db->insert('INSERT INTO contact(ContactName,ContactPhone,ContactMessage,ContactMail,ContactIP)
+VALUES (?,?,?,?,?)
+', [$name, $phone, $message, $mail, $IP]);
+
+  if ($query) {
+    echo ' <script>
+  alert("Mesajınız başarı ile gönderildi. En kısa sürede dönüş sağlayacağız.");
+  window.location.href = "https://ozgurvurgun.com/dejavu_hookah/pages/contact-location.php?table=' . $table . '";
+</script>';
+  } else {
+    echo ' <script>
+  alert("Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+  window.location.href = "https://ozgurvurgun.com/dejavu_hookah/pages/contact-location.php?table=' . $table . '";
+</script>';
+  }
+}
+
+
+?>

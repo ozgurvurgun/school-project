@@ -1,0 +1,12 @@
+#tarayıcının önbelleğe almasını engelleme
+<IfModule mod_headers.c>
+Header set Content-Control "no-cache, no-store, must-revalidate"
+Header set Expires "Sun, 01 Jan 1981 01:00:00GMT"
+Header set Pragma "no-cache"
+</IfModule>
+#404 sayfasına yönlendirme
+ErrorDocument 404 https://www.ozgurvurgun.com/dejavu_hookah/404.html
+#seo uyumlu url
+#RewriteRule ^([0-9a-zA-Z-_0]+)$ index.php?page=$1
+#klasor erisimi engelleme
+Options -Indexes

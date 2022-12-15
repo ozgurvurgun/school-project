@@ -1,3 +1,9 @@
+<?php
+require_once 'DB/database.php';
+
+use dejavu_hookah\db\Database as db;
+?>
+
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -16,15 +22,15 @@
 <body>
   <!-- header start -->
   <header class="header">
-    <a href="index.php" class="logo">
+    <a href="javascript:void(0)" class="logo">
       <img src="images/logo-images/dejavu-fococlipping-standard.png" alt="logo" />
     </a>
     <nav class="navbar">
-      <a href="index.php">Gruplar</a>
-      <a href="pages/contact.php">İletişim</a>
+      <a href="https://ozgurvurgun.com/dejavu_hookah/?table=<?= $_GET['table'] ?>">Gruplar</a>
+      <a href="https://ozgurvurgun.com/dejavu_hookah/pages/contact.php?table=<?= $_GET['table'] ?>">İletişim</a>
     </nav>
     <div class="buttons">
-      <button id="cart-btn">
+      <button name="siparis" id="cart-btn">
         <i class="fas fa-shopping-cart shop-sepet">
           <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
         </i>
@@ -33,8 +39,14 @@
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <?php require "pages/globalvalue.php";
-    ?>
+
+
+
+    <!-- GLOBAL VALUES START -->
+    <section style="display: none;" class="menu" id="menu">
+      <?php require "pages/globalValue.php"; ?>
+    </section>
+    <!-- GLOBAL VALUES END -->
     <div id="shop-kapsayici" class="cart-items-container">
       <?php require "pages/container.php";
       ?>
@@ -85,146 +97,36 @@
   <section class="products" id="gruplar">
     <h1 class="heading">grup <span>seç</span></h1>
     <div class="box-container">
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Nakhla</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">110-140₺</b>
-            <span class="amoumt">text</span>
+      <?php
+      $db = new db;
+      $query = $db->getRows('SELECT * FROM groups WHERE GroupActivity=? ORDER BY ID DESC', [1]);
+      foreach ($query as $items) { ?>
+        <div class="box dark-bg">
+          <div class="box-head">
+            <span class="title"><?= $items->TopDescription ?></span>
+            <p class="name"><?= $items->GroupName ?></p>
           </div>
-          <div class="product-btn">
-            <a href="pages/nakhla.php">
-              <i class="fas fa-plus"></i>
-            </a>
+          <div class="image">
+            <img src="images/group-images/<?= $items->GroupPhoto ?>" alt="<?= $items->GroupName ?>" />
           </div>
-        </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Al fakher</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">100₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/alfakher.php">
-              <i class="fas fa-plus"></i>
-            </a>
+          <div class="box-bottom">
+            <div class="info">
+              <b class="price"><?= $items->PriceRange ?><span>₺</span></b>
+              <span class="amoumt"><?= $items->SubDescription ?></span>
+            </div>
+            <div class="product-btn">
+              <?php
+              $table = $_GET["table"];
+              ?>
+              <form action="https://ozgurvurgun.com/dejavu_hookah/pages/products.php" method="GET">
+                <input style="display: none;" type="text" name="groupId" value="<?= $items->ID ?>">
+                <input style="display: none;" type="text" name="table" value="<?= $table ?>">
+                <button style="background-color: transparent;cursor:pointer" type="submit"><a><i class="fas fa-plus"></i></a></button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Adalya</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">100₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/adalya.php">
-              <i class="fas fa-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Best Couple</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">100₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/bestcouple.php">
-              <i class="fas fa-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Truepassion</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">120₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/truepassion.php">
-              <i class="fas fa-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Daim</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">100₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/daim.php">
-              <i class="fas fa-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="box dark-bg">
-        <div class="box-head">
-          <span class="title">text</span>
-          <p class="name">Fumari</p>
-        </div>
-        <div class="image">
-          <img src="images/nargilejpg.jpg" alt="" />
-        </div>
-        <div class="box-bottom">
-          <div class="info">
-            <b class="price">140₺</b>
-            <span class="amoumt">text</span>
-          </div>
-          <div class="product-btn">
-            <a href="pages/fumari.php">
-              <i class="fas fa-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+      <?php  }  ?>
     </div>
   </section>
   <!-- products end -->
@@ -281,4 +183,37 @@
     </div>
   </section>
   <!-- review end -->
-  <?php require "pages/footer.php"; ?>
+
+  <!-- footer start -->
+  <section class="footer">
+    <!-- <div class="search">
+      <input type="text" class="search-input" placeholder="search">
+      <button class="btn btn-primary">search</button>
+    </div> -->
+    <div class="share">
+      <a href="#" class="fab fa-facebook"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+    </div>
+    <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
+  </section>
+  <!-- footer end -->
+
+  <!--my js library start-->
+  <script>
+    localStorage.setItem("oncu", 0);
+  </script>
+  <script src="js/response.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/onloadGetValue.js"></script>
+  
+  <script src="js/modal.js"></script>
+  <!--my js library end-->
+  <!--bootstrap js start-->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script> -->
+  <!--bootstrap js end-->
+</body>
+
+</html>

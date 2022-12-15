@@ -5,9 +5,9 @@ namespace dejavu_hookah\db;
 class Database
 {
     private $host = 'localhost';
-    private $user = 'root';
-    private $password = '';
-    private $dbname = 'hookah';
+    private $user = 'ozg26vurguncom_admin';
+    private $password = 'd-D_Tt025698,gOr.';
+    private $dbname = 'ozg26vurguncom_dejavudb';
     private $charset = 'UTF8';
     private $collation = 'utf8_general_ci';
     private $pdo = null;
