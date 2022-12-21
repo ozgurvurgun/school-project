@@ -5,6 +5,11 @@ if ($_SESSION['user'] == null) {
 }
 require_once '../DB/database.php';
 require_once 'admin-security/admin-security.php';
+if ($_SESSION['authority'] == "1") {
+    $authorityOne = "disabled";
+} elseif ($_SESSION['authority'] == "2") {
+    $authorityTwo = "disabled";
+}
 
 use dejavu_hookah\db\Database as db;
 
@@ -40,19 +45,19 @@ $db = new db;
                             Menü
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="pages/add-group.php">Grup Ekle</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?>" href="pages/add-group.php">Grup Ekle</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="pages/add-product.php">Ürün Ekle</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?>" href="pages/add-product.php">Ürün Ekle</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="pages/price-update.php">Fiyat Güncelle</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?>" href="pages/product-process.php">Ürün İşlemleri</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="pages/stock.php">Stok</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?>" href="pages/group-process.php">Grup İşlemleri</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -60,24 +65,21 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="pages/income.php">Kazanç</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="pages/income.php">Kazanç</a></li>
                             <li>
-                                <hr class="dropdown-divider">
+                                <hr class="dropdown-divider <?= $authorityOne ?>">
                             </li>
-                            <li><a class="dropdown-item" href="pages/z-report.php">Z Raporu</a></li>
+                            <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="pages/z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/analysis.php">Analiz</a>
+                        <a class="nav-link <?= $authorityOne ?>" href="pages/security.php">Güvenlik</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/security.php">Güvenlik</a>
+                        <a class="nav-link <?= $authorityOne ?><?= $authorityTwo ?>" aria-current="page" href="pages/user-operations.php">Kullanıcı İşlemleri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="pages/user-operations.php">Kullanıcı İşlemleri</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="pages/message.php">Gelen Kutusu</a>
+                        <a class="nav-link <?= $authorityOne ?>" aria-current="page" href="pages/message.php">Gelen Kutusu</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right me-2">

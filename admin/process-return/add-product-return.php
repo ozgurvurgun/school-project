@@ -102,6 +102,9 @@ if (isset($_POST['ProductName'])) {
                                 if (localStorage.getItem("' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-number") < 1) {
                                     const list = document.getElementById("shop-container-' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '");
                                     list.removeChild(list.firstElementChild);
+                                    localStorage.removeItem("' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-number");
+                                    localStorage.removeItem("' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-price");
+                                    localStorage.removeItem("total-' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-price");
                                 }
                                 else {
                                     localStorage.setItem("' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-number", localStorage.getItem("' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-number") - 1);
@@ -132,13 +135,14 @@ if (isset($_POST['ProductName'])) {
                             <div id="' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-price">' . $ProductPrice . '</div>
                             <div id="' . $GroupStorage->GroupStorageName . '-' . $ProductStorageName . '-add"></div>
                             ';
-                            $db->insert('INSERT INTO scripts(ProductID,MainScript,OnloadGetValue,TotalStoragePrice,TotalStorageNumber,BasketContainerDiv,GlobalDivID)
-                            VALUES (?,?,?,?,?,?,?)
-                            ', [$GroupID, $script, $onloadGetValue, $totalStoragePrice, $totalStorageNumber, $basketContainer, $globalID]);
+                            $ProductScriptsMatching = $db->getColumn("SELECT ProductAutoID FROM products ORDER BY ProductAutoID DESC LIMIT 1");
+                            $db->insert('INSERT INTO scripts(ProductAutoID,ProductID,MainScript,OnloadGetValue,TotalStoragePrice,TotalStorageNumber,BasketContainerDiv,GlobalDivID)
+                            VALUES (?,?,?,?,?,?,?,?)
+                            ', [$ProductScriptsMatching,$GroupID, $script, $onloadGetValue, $totalStoragePrice, $totalStorageNumber, $basketContainer, $globalID]);
 
                             /////main js code file write
                             $file = fopen("../../js/script.js", 'w'); //dosya oluşturma işlemi
-                            $query = $db->getRows("SELECT MainScript FROM scripts");
+                            $query = $db->getRows("SELECT scripts.MainScript, products.ProductActivity FROM scripts INNER JOIN products ON products.ProductAutoID=scripts.ProductAutoID  WHERE products.ProductActivity=?",["A"]);
                             $write = "\"use strict\";
                             let imgPage;
                             imgPage = \"../images/product-images/\";
@@ -155,7 +159,7 @@ if (isset($_POST['ProductName'])) {
 
                             /////onload get value and price,number write
                             $file = fopen("../../js/onloadGetValue.js", 'w'); //dosya oluşturma işlemi
-                            $query = $db->getRows("SELECT TotalStoragePrice,TotalStorageNumber FROM scripts");
+                            $query = $db->getRows("SELECT scripts.TotalStoragePrice, scripts.TotalStorageNumber, products.ProductActivity FROM scripts INNER JOIN products ON products.ProductAutoID=scripts.ProductAutoID  WHERE products.ProductActivity=?",["A"]);
                             $write = "
                             function total_price_total_number() {
                             localStorage.setItem(\"totalPrice\", (Number(localStorage.getItem(\"oncu\")) ";
@@ -175,7 +179,7 @@ if (isset($_POST['ProductName'])) {
                             window.onload = function () { price_print_all() } 
                             function price_print_all() {
                             ";
-                            $query = $db->getRows("SELECT OnloadGetValue FROM scripts");
+                            $query = $db->getRows("SELECT scripts.OnloadGetValue, products.ProductActivity FROM scripts INNER JOIN products ON products.ProductAutoID=scripts.ProductAutoID  WHERE products.ProductActivity=?",["A"]);
                             foreach ($query as $items) {
                                 $write .= $items->OnloadGetValue; //dosya içine ne yazma işlemi
                             }
@@ -185,7 +189,7 @@ if (isset($_POST['ProductName'])) {
 
                             /////container div write
                             $file = fopen("../../pages/container.php", 'w'); //dosya oluşturma işlemi
-                            $query = $db->getRows("SELECT BasketContainerDiv FROM scripts");
+                            $query = $db->getRows("SELECT scripts.BasketContainerDiv, products.ProductActivity FROM scripts INNER JOIN products ON products.ProductAutoID=scripts.ProductAutoID  WHERE products.ProductActivity=?",["A"]);
                             $write = "";
                             foreach ($query as $items) {
                                 $write .= $items->BasketContainerDiv;
@@ -195,7 +199,7 @@ if (isset($_POST['ProductName'])) {
 
                             /////global div write
                             $file = fopen("../../pages/globalValue.php", 'w'); //dosya oluşturma işlemi
-                            $query = $db->getRows("SELECT GlobalDivID FROM scripts");
+                            $query = $db->getRows("SELECT scripts.GlobalDivID, products.ProductActivity FROM scripts INNER JOIN products ON products.ProductAutoID=scripts.ProductAutoID  WHERE products.ProductActivity=?",["A"]);
                             $write = "";
                             foreach ($query as $items) {
                                 $write .= $items->GlobalDivID; //dosya içine ne yazma işlemi
@@ -212,8 +216,8 @@ if (isset($_POST['ProductName'])) {
             }
         }
     }
-    $query = $db->getRows("SELECT products.ProductAutoID, products.ProductID, products.ProductName, products.ProductPrice, products.ProductDiscountPrice, products.ProductStorageName, products.ProductPicture, groups.GroupName FROM products INNER JOIN groups ON products.ProductID=groups.ID ORDER BY products.ProductAutoID DESC");
-    $records = $db->getColumn("SELECT COUNT(ProductID) FROM products");
+    $query = $db->getRows("SELECT products.ProductAutoID, products.ProductID, products.ProductName, products.ProductPrice, products.ProductDiscountPrice, products.ProductStorageName, products.ProductPicture, groups.GroupName FROM products INNER JOIN groups ON products.ProductID=groups.ID ORDER BY products.ProductID DESC , products.ProductAutoID DESC");
+    $records = $db->getColumn("SELECT COUNT(ProductID) FROM products");                                                                                                                                                                                                                                                                           
     if ($records < 1) {
         $recorsValue = 'Kayıtlı Ürün Yok';
     } else {

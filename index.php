@@ -48,8 +48,9 @@ use dejavu_hookah\db\Database as db;
     </section>
     <!-- GLOBAL VALUES END -->
     <div id="shop-kapsayici" class="cart-items-container">
-      <?php require "pages/container.php";
-      ?>
+      <span id="productContainer">
+        <?php require "pages/container.php"; ?>
+      </span>
       <div class="cart-item">
         <img src="images/TL-simgesi.png" alt="menu">
         <div class="content">
@@ -99,7 +100,7 @@ use dejavu_hookah\db\Database as db;
     <div class="box-container">
       <?php
       $db = new db;
-      $query = $db->getRows('SELECT * FROM groups WHERE GroupActivity=? ORDER BY ID DESC', [1]);
+      $query = $db->getRows('SELECT * FROM groups WHERE GroupActivity=? ORDER BY ID DESC', ["A"]);
       foreach ($query as $items) { ?>
         <div class="box dark-bg">
           <div class="box-head">
@@ -203,17 +204,64 @@ use dejavu_hookah\db\Database as db;
   <script>
     localStorage.setItem("oncu", 0);
   </script>
+
+
   <script src="js/response.js"></script>
   <script src="js/script.js"></script>
   <script src="js/onloadGetValue.js"></script>
-  
-  <script src="js/modal.js"></script>
-  <!--my js library end-->
-  <!--bootstrap js start-->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script> -->
-  <!--bootstrap js end-->
+  <!-- <script src="js/modal.js"></script> -->
+
+  <script>
+    <?php
+    //php ile ürün storage isimlerini çekmemin sebebi:
+    //yeni ürünlerin bağımsız şekilde isimleri ve fiyatları localStorage da tutuluyor her yeni ürün eklendiğin de yeni storage js koduna
+    //gomuluyor. js koduda veritabanına kayıt ediliyor.
+    //bu php sorgusu ile storage isimlerini çekmenin sebebi sistemi no code yapıya yaklaştırmak. kullanıcı yeni ürün eklediğinde 
+    //storage ismi buraya çekilecek. 
+    //storage isimlerini döngüler ile kontrol edecek, çeşitli uyarlamalar yapacak şekilde dizayn ettim
+    //her storage i "urunGrubu"-"urunAdi"-"urunSayisi", "urunGrubu"-"UrunAdı"-"urunFiyati" .... şeklinde parse edilebilecek şekilde yazdım
+    //bu storage yazımının getirdiği kolaylık ile storage değerlerini rahatça donguye sokabiliyorum vb...
+    //bu şekilde backend den isimleri çektim. çünkü storage isimlerini js ile çekemiyorum. storage ismine bir şekilde erişememem demek
+    //yeni ürün eklendiğin de o ürününün değerlerine erişmek için tekrar editoru açmam demek
+    $query = $db->getRows('SELECT  products.ProductStorageName, groups.GroupStorageName FROM products 
+    INNER JOIN groups ON groups.ID = products.ProductID');
+
+    $productArray = [];
+    foreach ($query as $items) {
+      array_push($productArray, $items->GroupStorageName . '-' . $items->ProductStorageName);
+    }
+    $products = "";
+    foreach ($productArray as $key => $value) {
+      $products .= "\"$value\",";
+    }
+    $products = rtrim($products, ",");
+    echo "var products = [$products];\n";
+    ?>
+    const order = document.querySelector("#order");
+    order.addEventListener("click", orderNow);
+
+    function orderNow() {
+      if (localStorage.getItem("totalNumber") >= 1) {
+        let totalOrder = [];
+        let totalPrice = localStorage.getItem("totalPrice");
+        for (let index = 0; index < products.length; index++) {
+          if (localStorage.getItem(products[index] + "-" + "number") >= 1) {
+            let a = localStorage.getItem(products[index] + "-" + "number");
+            let b = localStorage.getItem(products[index] + "-" + "name");
+            totalOrder.push(a + " ADET " + b);
+          }
+        }
+        if (confirm(totalOrder + " TUTAR = " + totalPrice + " TL SİPARİŞİNİZ DOĞRU İSE ONAYLAYIN")) {
+          alert("SIPARISINI ALDIK EN KISA ZAMANDA MASANDA OLACAK :)");
+          localStorage.clear();
+          sessionStorage.clear();
+          total_price_total_number();
+          document.getElementById("productContainer").innerHTML = "";
+          document.getElementById("productContainer").innerHTML = '<?php require "pages/container.php"; ?>';
+        }
+      }
+    }
+  </script>
 </body>
 
 </html>

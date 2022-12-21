@@ -3,6 +3,8 @@ require_once '../security/security.php';
 require_once '../DB/database.php';
 
 use dejavu_hookah\db\Database as db;
+
+$db = new db;
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -48,8 +50,9 @@ use dejavu_hookah\db\Database as db;
 
 
     <div class="cart-items-container">
-      <?php require "container.php";
-      ?>
+      <span>
+        <?php require "container.php"; ?>
+      </span>
       <div class="cart-item">
         <img src="../images/TL-simgesi.png" alt="menu">
         <div class="content">
@@ -132,7 +135,54 @@ use dejavu_hookah\db\Database as db;
   <script src="../js/response.js"></script>
   <script src="../js/onloadGetValue.js"></script>
   <script src="../js/script.js"></script>
-  <script src="../js/modal.js"></script>
+  <!-- <script src="../js/modal.js"></script> -->
+
+  <script>
+    localStorage.setItem("oncu", 0);
+  </script>
+  <script>
+    <?php
+    $query = $db->getRows('SELECT  products.ProductStorageName, groups.GroupStorageName FROM products 
+    INNER JOIN groups ON groups.ID = products.ProductID');
+
+    $productArray = [];
+    foreach ($query as $items) {
+      array_push($productArray, $items->GroupStorageName . '-' . $items->ProductStorageName);
+    }
+    $products = "";
+    foreach ($productArray as $key => $value) {
+      $products .= "\"$value\",";
+    }
+    $products = rtrim($products, ",");
+    echo "var products = [$products];\n";
+    ?>
+    const order = document.querySelector("#order");
+    order.addEventListener("click", orderNow);
+
+    function orderNow() {
+      if (localStorage.getItem("totalNumber") >= 1) {
+        let totalOrder = [];
+        let totalPrice = localStorage.getItem("totalPrice");
+        for (let index = 0; index < products.length; index++) {
+          if (localStorage.getItem(products[index] + "-" + "number") >= 1) {
+            let a = localStorage.getItem(products[index] + "-" + "number");
+            let b = localStorage.getItem(products[index] + "-" + "name");
+            totalOrder.push(a + " ADET " + b);
+          }
+        }
+        if (confirm(totalOrder + " TUTAR = " + totalPrice + " TL SİPARİŞİNİZ DOĞRU İSE ONAYLAYIN")) {
+          alert("SIPARISINI ALDIK EN KISA ZAMANDA MASANDA OLACAK :)");
+          localStorage.clear();
+          sessionStorage.clear();
+          total_price_total_number();
+          document.getElementById("productContainer").innerHTML = "";
+          document.getElementById("productContainer").innerHTML = '<?php require "container.php"; ?>';
+        }
+      }
+    }
+  </script>
+
+
   <!--my js library end-->
   <!--bootstrap js start-->
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

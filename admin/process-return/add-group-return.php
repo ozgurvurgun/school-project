@@ -60,7 +60,7 @@ if (isset($_POST['GroupName'])) {
     $query = $db->getRows('SELECT * FROM groups ORDER BY ID DESC');
     $records = $db->getColumn("SELECT COUNT(ID) FROM groups");
     if ($records < 1) {
-        $recorsValue = 'Kayıtlı Grup Yok';
+        $records = 'Kayıtlı Grup Yok';
     } else {
         $records = 'Mevcut gruplarınız - ' . $records . ' adet';
     }

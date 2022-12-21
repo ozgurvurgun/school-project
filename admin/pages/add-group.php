@@ -3,6 +3,15 @@ session_start();
 if ($_SESSION['user'] == null) {
     header('Location:https://ozgurvurgun.com/dejavu_hookah/admin/index.php');
 }
+if ($_SESSION['authority'] == "2" || $_SESSION['authority'] == "3") {
+} else {
+    die("yetkisiz erişim, bu sayfaya 2. derece veya üstü yetki seviyesine sahip kullanıcılar erişebilir.");
+}
+if ($_SESSION['authority'] == "1") {
+    $authorityOne = "disabled";
+} elseif ($_SESSION['authority'] == "2") {
+    $authorityTwo = "disabled";
+}
 require_once '../../DB/database.php';
 require_once '../admin-security/admin-security.php';
 
@@ -50,11 +59,11 @@ $db = new db;
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="price-update.php">Fiyat Güncelle</a></li>
+                            <li><a class="dropdown-item" href="product-process.php">Ürün İşlemleri</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="stock.php">Stok</a></li>
+                            <li><a class="dropdown-item" href="group-process.php">Grup İşlemleri</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -62,21 +71,18 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="income.php">Kazanç</a></li>
+                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="z-report.php">Z Raporu</a></li>
+                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="analysis.php">Analiz</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="security.php">Güvenlik</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="user-operations.php">Kullanıcı İşlemleri</a>
+                        <a class="nav-link <?= $authorityTwo ?>" aria-current="page" href="user-operations.php">Kullanıcı İşlemleri</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="message.php">Gelen Kutusu</a>
@@ -152,8 +158,6 @@ $db = new db;
                             <div class="col-sm-2"></div>
                             <div class="col-md-10 ">
                                 <button type="submit" id="GroupAdd" name="GroupAdd" class="btn btn-success btn-lg mt-3">Ekle <span class="loadingAnimation"></span></button>
-                                <button type="button" id="GroupUpdate" name="GroupUpdate" class="btn btn-primary btn-lg mt-3">Güncelle <span class="loadingAnimation"></span></button>
-                                <button type="button" id="GroupDelete" name="GroupDelete" class="btn btn-danger btn-lg mt-3">Sil <span class="loadingAnimation"></span></button>
                             </div>
                         </div>
                     </form>
