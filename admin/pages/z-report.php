@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item text-warning <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -102,13 +102,136 @@ $db = new db;
         </div>
     </nav>
 
-    <h1>z raporu</h1>
+
+
+
+
+    <div class="container p-5 fs-6">
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive">
+                    <table id="printZtable" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Masa No</th>
+                                <th scope="col">Sipariş</th>
+                                <th scope="col">Tutar</th>
+                                <th scope="col">Teslim Zamanı</th>
+                            </tr>
+                        </thead>
+                        <tbody id="printZtableResult">
+                            <?php
+                            $query = $db->getRows("SELECT * FROM orderTableLog ORDER BY tableNo DESC , orderTableLogID DESC");
+                            foreach ($query as $items) { ?>
+                                <tr>
+                                    <th scope="row"><?= $items->tableNo ?></th>
+                                    <td><?= $items->orderContents ?></td>
+                                    <td><?= $items->orderAmount ?></td>
+                                    <td><?= $items->orderDate ?></td>
+                                </tr>
+                            <?php  } ?>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">
+                                    <h3>Z Raporu</h3>
+                                </th>
+                                <th scope="col">
+                                    <h4>Toplam</h4>
+                                </th>
+                                <th scope="col">
+                                    <h4>Rapor Oluşturulma Tarihi</h4>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>
+                                    <h5>
+                                        <?php
+                                        $query = $db->getRow('SELECT CompanyName FROM interfaceData WHERE interfaceDataID=?', [1]);
+                                        echo $query->CompanyName;
+                                        ?>
+                                    </h5>
+                                </td>
+                                <td>
+                                    <?php $priceSum = $db->getColumn("SELECT SUM(orderAmount) FROM orderTableLog"); ?>
+                                    <h5><?= $priceSum ?></h5>
+                                </td>
+                                <td><?php date_default_timezone_set('Europe/Istanbul');
+                                    echo "<h5>" . date('d.m.Y H:i:s') . "</h5>"; ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="mb-3 row">
+                    <svg id="printZbutton" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="mt-4 bi bi-printer text-danger" viewBox="0 0 16 16">
+                        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="col-md-1 mx-auto mt-3">
+                <form id="printZdeleteTable" method="POST">
+                    <div class="mb-3 row">
+                        <button onclick="printZprocess();" id="printZdeleteButton" name="printZdeleteButton" type="button" class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="mt-4 bi bi-trash text-danger" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function printZprocess() {
+            if (confirm('Log Kayıtlarını Silmek Üzeresiniz, Son Onayı Verin.')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../process-return/remove-z-report.php',
+                    success: function(data) {
+                        data = data.split(":::", 2);
+                        let message = data[0];
+                        let message2 = data[1];
+                        alert(message);
+                        $('#printZtableResult').html(message2);
+                    }
+                });
+            }
+        }
+    </script>
+
+
+
 
     <div class="container mt-5"></div>
-
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-
     <script src="../../assets/jquery-3-5-1.js"></script>
+    <script src="../../assets/print/printThis.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#printZbutton").on('click', function() {
+                $('#printZtable').printThis();
+            });
+        });
+    </script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
     <?php require_once '../js/global-message-notification.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>

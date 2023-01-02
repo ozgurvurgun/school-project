@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -101,9 +101,6 @@ $db = new db;
             </div>
         </div>
     </nav>
-
-
-    <!--/////////////////////////////////////////////////////-->
     <div class="container-fluid mt-2">
         <div class="row">
             <div class="col-md-5 mx-auto">
@@ -229,8 +226,6 @@ $db = new db;
             </div>
         </div>
     </div>
-    <!--/////////////////////////////////////////////////////-->
-
     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -276,17 +271,11 @@ $db = new db;
             </div>
         </div>
     </div>
-
-
-
-
     <div class="container mt-5"></div>
-
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-
     <script src="../../assets/jquery-3-5-1.js"></script>
     <?php require_once '../js/global-message-notification.php' ?>
-
     <script>
         function UpdateUsers(params) {
             let par = params.toString();
@@ -326,7 +315,6 @@ $db = new db;
                         document.getElementById("result").innerHTML = "";
                     }
                     setTimeout(ResultRemove, 6000);
-
                 }
             });
         });
@@ -356,11 +344,9 @@ $db = new db;
                         document.getElementById("resultModal").innerHTML = "";
                     }
                     setTimeout(ResultRemove, 6000);
-
                 }
             });
         });
-
 
         function RemoveUsers(Operation, ID) {
             if (confirm('Kullanıcıyı silmek istediğinizden emin misiniz ?')) {
@@ -382,8 +368,6 @@ $db = new db;
             }
         }
     </script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 

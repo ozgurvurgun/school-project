@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -101,10 +101,6 @@ $db = new db;
             </div>
         </div>
     </nav>
-
-
-
-
     <div class="container-fluid p-5 fs-6">
         <div class="row">
             <div class="col">
@@ -128,7 +124,6 @@ $db = new db;
                             $query = $db->getRows("SELECT products.ProductPicture, products.ProductActivity, products.ProductAutoID, products.ProductID, products.ProductName, products.ProductPrice, products.ProductDiscountPrice, products.ProductStorageName, products.ProductPicture, groups.GroupName, groups.ID, groups.GroupStorageName FROM products INNER JOIN groups ON products.ProductID=groups.ID ORDER BY products.ProductID DESC , products.ProductAutoID DESC");
                             $countQuery = $db->getColumn("SELECT COUNT(ProductAutoID) FROM products");
                             foreach ($query as $items) { ?>
-
                                 <div id="GroupStorageName<?= $items->ProductAutoID ?>" style="display: none;"><?= $items->GroupStorageName ?></div>
                                 <div id="GroupID<?= $items->ProductAutoID ?>" style="display: none;"><?= $items->ID ?></div>
                                 <div id="ProductPicture<?= $items->ProductAutoID ?>" style="display: none;"><?= $items->ProductPicture ?></div>
@@ -147,8 +142,6 @@ $db = new db;
                                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                             </svg>
                                         </button>
-
-
                                     </td>
                                     <td>
                                         <a href="javascript:void(0)" onclick="RemoveProduct('DeleteProduct','<?= $items->ProductAutoID ?>')">
@@ -167,9 +160,6 @@ $db = new db;
             </div>
         </div>
     </div>
-
-
-
     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -193,7 +183,6 @@ $db = new db;
                             <label for="recipient-name" class="col-form-label">İndirimli Fiyatı</label>
                             <input type="text" class="form-control" id="ProductDiscountPrice" name="ProductDiscountPrice">
                         </div>
-
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Ürün Durumu</label>
                             <select class="form-select" id="ProductActivity" name="ProductActivity" aria-label="Default select example">
@@ -202,7 +191,6 @@ $db = new db;
                                 <option value="B">B</option>
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Ürün fotoğrafı</label>
                             <input type="file" class="form-control" id="ProductPhoto" name="ProductPhoto">
@@ -210,7 +198,6 @@ $db = new db;
                         <div class="mb-3">
                             <div id="result"></div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
@@ -220,14 +207,11 @@ $db = new db;
             </div>
         </div>
     </div>
-
     <div class="container mt-5"></div>
-
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-
     <script src="../../assets/jquery-3-5-1.js"></script>
     <?php require_once '../js/global-message-notification.php' ?>
-
     <script>
         function UpdateProduct(params) {
             let par = params.toString();
@@ -249,8 +233,6 @@ $db = new db;
             document.getElementById("ProductPicture").value = ProductPicture;
             document.getElementById("GroupStorageName").value = GroupStorageName;
             document.getElementById("ProductStorageName").value = ProductStorageName;
-
-
         }
 
         function RemoveProduct(Operation, ID) {
@@ -272,7 +254,6 @@ $db = new db;
                 });
             }
         }
-
         $("#productUpdateForm").on('submit', function(e) {
             e.preventDefault();
             $(".loadingAnimation").html('<div class="spinner-border" role="status"><span class="visually-hidden"></span></div>');
@@ -298,7 +279,6 @@ $db = new db;
                         document.getElementById("result").innerHTML = "";
                     }
                     setTimeout(ResultRemove, 6000);
-
                 }
             });
         });

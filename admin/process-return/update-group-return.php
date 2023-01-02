@@ -3,32 +3,31 @@ require_once '../../DB/database.php';
 require_once '../admin-security/admin-security.php';
 
 use dejavu_hookah\db\Database as db;
-use LDAP\Result;
 
 $db = new db;
 @$operation = $_GET["process"];
 switch ($operation) {
     case 'DeleteGroup':
         $ID = $_GET["ID"];
+        $oldPhoto = $db->getRow("SELECT GroupPhoto FROM groups WHERE ID=?", [$ID]);
         $deleteGroup = $db->delete("DELETE FROM groups WHERE ID=?", [$ID]);
         $deleteProduct = $db->delete("DELETE FROM products WHERE ProductID=?", [$ID]);
         $deleteScript = $db->delete("DELETE FROM scripts WHERE ProductID=?", [$ID]);
         $countQuery = $db->getColumn("SELECT COUNT(ID) FROM groups");
         if ($countQuery >= 1) {
-            if ($deleteGroup && $deleteScript && $deleteScript) {
+            if ($deleteGroup) {
+                unlink("../../images/group-images/" . $oldPhoto->GroupPhoto . "");
                 $message = "Kayıt silindi.:::success";
             } else {
                 $message = "Kayıt silinemedi.:::danger";
             }
         } else {
+            unlink("../../images/group-images/" . $oldPhoto->GroupPhoto . "");
             $message = 'Kayıt silindi:::warning';
         }
         echo $message;
         break;
-
-
     case 'groupUpdate':
-
         if (isset($_POST["GroupID"])) {
             $GroupID = security('GroupID');
             $GroupStorageName = security('GroupStorageName');
@@ -40,35 +39,39 @@ switch ($operation) {
             $fileName = $_FILES['GroupNewPhoto']['name'];
             $fileTMP = $_FILES['GroupNewPhoto']['tmp_name'];
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = $GroupStorageName . '.' . $ext;
+            $newFileName = rand() . "-" . $GroupStorageName . '.' . $ext;
             $path = '../../images/group-images/' . $newFileName;
-
             if ($_FILES["GroupNewPhoto"]["name"] == '') {
-                $newFileName = $GroupPhoto;
+                $oldPhoto = $db->getRow("SELECT GroupPhoto FROM groups WHERE ID=?", [$GroupID]);
+                $newFileName = $oldPhoto->GroupPhoto;
             } else {
                 move_uploaded_file($fileTMP, $path);
             }
-            if (empty($TopDescription) or empty($SubDescription) or empty($PriceRange) or empty($GroupActivity)) {
+            if (empty($PriceRange) or empty($GroupActivity)) {
                 $result = '<div class="alert alert-warning">Lütfen boş alanları doldurun.</div>:::';
             } else {
+                $oldPhoto = $db->getRow("SELECT GroupPhoto FROM groups WHERE ID=?", [$GroupID]);
                 $updateGroups = $db->update('UPDATE groups SET TopDescription=?, GroupPhoto=?, PriceRange=?, SubDescription=?, GroupActivity=? WHERE ID=?
                 ', [$TopDescription, $newFileName, $PriceRange, $SubDescription, $GroupActivity, $GroupID]);
                 if ($updateGroups) {
                     $result = '<div class="alert alert-success mt-2 mb-3 text-center" role="alert">
                                            <div style="font-size: 20px;">Kayıt başarı ile güncellendi</div>
                                            </div>:::';
+                    if ($_FILES["GroupNewPhoto"]["name"] != '') {
+                        unlink("../../images/group-images/" . $oldPhoto->GroupPhoto . "");
+                    }
                 } else {
                     $result = '<div class="alert alert-warning mt-2 mb-3 text-center" role="alert">
                             <div style="font-size: 20px;">Aynı verileri giriyorsunuz</div>
                             </div>:::';
                 }
             }
-
             $query = $db->getRows("SELECT * FROM groups ORDER BY ID DESC");
             foreach ($query as $items) {
                 $result .=  '       
               <div id="GroupID' . $items->ID . '" style="display: none;">' . $items->ID . '</div>
               <div id="GroupPhoto' . $items->ID . '" style="display: none;">' . $items->GroupPhoto . '</div>
+              <div id="GroupStorageName' . $items->GroupStorageName . '" style="display: none;">' . $items->GroupStorageName . '</div>
               <tr id="' . $items->ID . '">
               <th scope="row"><img width="70px" height="70px" src="../../images/group-images/' . $items->GroupPhoto . '" alt="' . $items->GroupPhoto . '"></th>
               <td id="GroupName' . $items->ID . '">' . $items->GroupName . '</td>
@@ -81,7 +84,6 @@ switch ($operation) {
                 } else {
                     $result .= "<td style=\"color:red;font-size:20px;\" id=\"GroupActivity$items->ID\">Pasif</td>";
                 }
-
                 $result .= ' <td>
             <button onclick="UpdateGroup(' . $items->ID . ');" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-pencil-square text-info" viewBox="0 0 16 16">
@@ -98,15 +100,12 @@ switch ($operation) {
                 </svg>
             </a>
         </td>
-    </tr>
-                
+    </tr>         
                 ';
             }
             echo $result;
         }
         break;
-
     default:
-
         break;
 }

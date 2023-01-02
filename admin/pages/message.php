@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -101,7 +101,6 @@ $db = new db;
             </div>
         </div>
     </nav>
-
     <div class="container-fluid p-5 fs-6">
         <div class="row">
             <div class="col">
@@ -149,6 +148,7 @@ $db = new db;
             </div>
         </div>
     </div>
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <script src="../../assets/jquery-3-5-1.js"></script>
     <?php require_once '../js/message-notification.php' ?>

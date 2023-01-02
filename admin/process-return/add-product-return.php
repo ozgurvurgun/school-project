@@ -221,7 +221,7 @@ if (isset($_POST['ProductName'])) {
     if ($records < 1) {
         $recorsValue = 'Kayıtlı Ürün Yok';
     } else {
-        $records = 'Mevcut gruplarınız - ' . $records . ' adet';
+        $records = 'Mevcut ürünleriniz - ' . $records . ' adet';
     }
     foreach ($query as $items) {
         $result .= '<tr>

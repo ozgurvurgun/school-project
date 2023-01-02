@@ -11,7 +11,6 @@ use dejavu_hookah\db\Database as db;
 $db = new db;
 $records = $db->getColumn("SELECT COUNT(ContactID) FROM contact");
 $query = $db->getRows("SELECT * FROM contact ORDER BY ContactID DESC");
-$a = $records - 1;
 $message = "";
 foreach ($query as $items) {
     $message .= '  <tr id="' . $items->ContactID . '">

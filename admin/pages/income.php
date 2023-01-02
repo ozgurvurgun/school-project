@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item text-warning <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -105,9 +105,8 @@ $db = new db;
     <h1>kazanç</h1>
 
     <div class="container mt-5"></div>
-
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-
     <script src="../../assets/jquery-3-5-1.js"></script>
     <?php require_once '../js/global-message-notification.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

@@ -3,30 +3,30 @@ require_once '../../DB/database.php';
 require_once '../admin-security/admin-security.php';
 
 use dejavu_hookah\db\Database as db;
-use LDAP\Result;
 
 $db = new db;
 @$operation = $_GET["process"];
 switch ($operation) {
     case 'DeleteProduct':
         $ID = $_GET["ID"];
+        $oldPhoto = $db->getRow("SELECT ProductPicture FROM products WHERE ProductAutoID=?", [$ID]);
         $deleteProduct = $db->delete("DELETE FROM products WHERE ProductAutoID=?", [$ID]);
         $deleteScript = $db->delete("DELETE FROM scripts WHERE ProductAutoID=?", [$ID]);
         $countQuery = $db->getColumn("SELECT COUNT(ProductAutoID) FROM products");
         if ($countQuery >= 1) {
             if ($deleteScript && $deleteProduct) {
+                unlink("../../images/product-images/" . $oldPhoto->ProductPicture . "");
                 $message = "Kayıt silindi.:::success";
             } else {
                 $message = "Kayıt silinemedi.:::danger";
             }
         } else {
+            unlink("../../images/product-images/" . $oldPhoto->ProductPicture . "");
             $message = 'Kayıt silindi:::warning';
         }
         echo $message;
         break;
-
     case 'priceUpdate':
-
         if (isset($_POST["ProductID"])) {
             $ProductID = security('ProductID');
             $GroupStorageName = security('GroupStorageName');
@@ -38,35 +38,192 @@ switch ($operation) {
             $fileName = $_FILES['ProductPhoto']['name'];
             $fileTMP = $_FILES['ProductPhoto']['tmp_name'];
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-            $newFileName = $ProductStorageName . '.' . $ext;
+            $newFileName = rand() . "-" . $ProductStorageName . '.' . $ext;
             $path = '../../images/product-images/' . $newFileName;
-
             $GlobalDivIDNewValue = '
             <div id="' . $GroupStorageName . '-' . $ProductStorageName . '-price">' . $ProductPrice . '</div>
             <div id="' . $GroupStorageName . '-' . $ProductStorageName . '-add"></div>
             ';
-            $db->update('UPDATE scripts SET GlobalDivID=? WHERE ProductAutoID=?', [$GlobalDivIDNewValue, $ProductID]);
+            $db->update('UPDATE scripts SET GlobalDivID=?  WHERE ProductAutoID=?', [$GlobalDivIDNewValue, $ProductID]);
             if ($_FILES["ProductPhoto"]["name"] == '') {
-                $newFileName = $ProductPicture;
+                $oldPhoto = $db->getRow("SELECT ProductPicture FROM products WHERE ProductAutoID=?", [$ProductID]);
+                $newFileName = $oldPhoto->ProductPicture;
+                $ProductName = $db->getRow("SELECT ProductName FROM products WHERE ProductAutoID=?", [$ProductID]);
+                $script = 'const ' . $GroupStorageName . '_' . $ProductStorageName . '= document.querySelector("#' . $GroupStorageName . '-' . $ProductStorageName . '-add");
+                const ' . $GroupStorageName . '_' . $ProductStorageName . '_price = Number(document.querySelector("#' . $GroupStorageName . '-' . $ProductStorageName . '-price").innerHTML);
+                var ' . $GroupStorageName . '_' . $ProductStorageName . '_number;
+                ' . $GroupStorageName . '_' . $ProductStorageName . '.addEventListener("click", tolist_' . $GroupStorageName . '_' . $ProductStorageName . ');
+                function tolist_' . $GroupStorageName . '_' . $ProductStorageName . '(par) {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").style.display = "block";
+                    if (par == "azalt") {
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number--;
+                    }
+                    if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "null" || localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "undefined" || localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "NaN") {
+                        localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", 0);
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number = localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                    }
+                    ' . $GroupStorageName . '_' . $ProductStorageName . '_number = localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                    if (par != "azalt") { // parametre "azalt" stringine eşit değilse ürün sayısı bir art
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number++;
+                    }
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name", "' . $ProductName->ProductName . '");
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price", ' . $GroupStorageName . '_' . $ProductStorageName . '_price);
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", ' . $GroupStorageName . '_' . $ProductStorageName . '_number);
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                    localStorage.setItem("total-' . $GroupStorageName . '-' . $ProductStorageName . '-price", localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") * localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number"));
+                    price_print_' . $GroupStorageName . '_' . $ProductStorageName . '();
+                } ';
+                $script .= '
+                function price_print_' . $GroupStorageName . '_' . $ProductStorageName . '() {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                    total_price_total_number();
+                } ';
+                $script .= '
+                function decrease_' . $GroupStorageName . '_' . $ProductStorageName . '() {
+                    if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") < 1) {
+                        const list = document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '");
+                        list.removeChild(list.firstElementChild);
+                        localStorage.removeItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                        localStorage.removeItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price");
+                        localStorage.removeItem("total-' . $GroupStorageName . '-' . $ProductStorageName . '-price");
+                    }
+                    else {
+                        localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") - 1);
+                        tolist_' . $GroupStorageName . '_' . $ProductStorageName . '("azalt");
+                        if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") < 1) {
+                            document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").style.display = "none";
+                        }
+                    }
+                } ';
+                $onloadGetValue = '
+                if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") > 0) {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                        total_price_total_number();
+                } ';
+                $db->update('UPDATE scripts SET MainScript=?, OnloadGetValue=?  WHERE ProductAutoID=?', [$script, $onloadGetValue, $ProductID]);
             } else {
+                $ProductName = $db->getRow("SELECT ProductName FROM products WHERE ProductAutoID=?", [$ProductID]);
+                $script = 'const ' . $GroupStorageName . '_' . $ProductStorageName . '= document.querySelector("#' . $GroupStorageName . '-' . $ProductStorageName . '-add");
+                const ' . $GroupStorageName . '_' . $ProductStorageName . '_price = Number(document.querySelector("#' . $GroupStorageName . '-' . $ProductStorageName . '-price").innerHTML);
+                var ' . $GroupStorageName . '_' . $ProductStorageName . '_number;
+                ' . $GroupStorageName . '_' . $ProductStorageName . '.addEventListener("click", tolist_' . $GroupStorageName . '_' . $ProductStorageName . ');
+                function tolist_' . $GroupStorageName . '_' . $ProductStorageName . '(par) {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").style.display = "block";
+                    if (par == "azalt") {
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number--;
+                    }
+                    if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "null" || localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "undefined" || localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") == "NaN") {
+                        localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", 0);
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number = localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                    }
+                    ' . $GroupStorageName . '_' . $ProductStorageName . '_number = localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                    if (par != "azalt") { // parametre "azalt" stringine eşit değilse ürün sayısı bir art
+                        ' . $GroupStorageName . '_' . $ProductStorageName . '_number++;
+                    }
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name", "' . $ProductName->ProductName . '");
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price", ' . $GroupStorageName . '_' . $ProductStorageName . '_price);
+                    localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", ' . $GroupStorageName . '_' . $ProductStorageName . '_number);
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                    localStorage.setItem("total-' . $GroupStorageName . '-' . $ProductStorageName . '-price", localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") * localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number"));
+                    price_print_' . $GroupStorageName . '_' . $ProductStorageName . '();
+                } ';
+                $script .= '
+                function price_print_' . $GroupStorageName . '_' . $ProductStorageName . '() {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                    total_price_total_number();
+                } ';
+                $script .= '
+                function decrease_' . $GroupStorageName . '_' . $ProductStorageName . '() {
+                    if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") < 1) {
+                        const list = document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '");
+                        list.removeChild(list.firstElementChild);
+                        localStorage.removeItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number");
+                        localStorage.removeItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price");
+                        localStorage.removeItem("total-' . $GroupStorageName . '-' . $ProductStorageName . '-price");
+                    }
+                    else {
+                        localStorage.setItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number", localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") - 1);
+                        tolist_' . $GroupStorageName . '_' . $ProductStorageName . '("azalt");
+                        if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") < 1) {
+                            document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").style.display = "none";
+                        }
+                    }
+                } ';
+                $onloadGetValue = '
+                if (localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") > 0) {
+                    document.getElementById("shop-container-' . $GroupStorageName . '-' . $ProductStorageName . '").innerHTML =
+                        \'<div class="cart-item">\' +
+                        \'<button  type="button" class="fas fa-times" onclick="decrease_' . $GroupStorageName . '_' . $ProductStorageName . '();"></button>\' +
+                        \'<img src="\' + imgPage + \'' . $newFileName . '" alt="menu">\' +
+                        \'<div class="content">\' +
+                        \'<h3>\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-name") + \'&nbsp;&nbsp;&nbsp;<span style="color: red;font-size:medium">x</span><span id="miktar" style="color: red;font-size:medium">&nbsp;\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-number") + \'</span> </h3>\' +
+                        \'<div class="price">\' + localStorage.getItem("' . $GroupStorageName . '-' . $ProductStorageName . '-price") + \'₺</div>\' +
+                        \'</div>\' +
+                        \'</div>\';
+                        total_price_total_number();
+                } ';
+                $db->update('UPDATE scripts SET MainScript=?, OnloadGetValue=?  WHERE ProductAutoID=?', [$script, $onloadGetValue, $ProductID]);
                 move_uploaded_file($fileTMP, $path);
             }
             if (empty($ProductPrice) or empty($ProductDiscountPrice) or empty($ProductActivity)) {
                 $result = '<div class="alert alert-warning">Lütfen boş alanları doldurun.</div>:::';
             } else {
+                $oldPhoto = $db->getRow("SELECT ProductPicture FROM products WHERE ProductAutoID=?", [$ProductID]);
                 $updateProducts = $db->update('UPDATE products SET ProductPrice=?, ProductDiscountPrice=?, ProductPicture=?, ProductActivity=? WHERE ProductAutoID=?
                 ', [$ProductPrice, $ProductDiscountPrice, $newFileName, $ProductActivity, $ProductID]);
                 if ($updateProducts) {
                     $result = '<div class="alert alert-success mt-2 mb-3 text-center" role="alert">
                                            <div style="font-size: 20px;">Kayıt başarı ile güncellendi</div>
                                            </div>:::';
+                    if ($_FILES["ProductPhoto"]["name"] != '') {
+                        unlink("../../images/product-images/" . $oldPhoto->ProductPicture . "");
+                    }
                 } else {
                     $result = '<div class="alert alert-warning mt-2 mb-3 text-center" role="alert">
                             <div style="font-size: 20px;">Aynı verileri giriyorsunuz</div>
                             </div>:::';
                 }
             }
-
             $query = $db->getRows("SELECT products.ProductPicture, products.ProductActivity, products.ProductAutoID, products.ProductID, products.ProductName, products.ProductPrice, products.ProductDiscountPrice, products.ProductStorageName, products.ProductPicture, groups.GroupName, groups.ID FROM products INNER JOIN groups ON products.ProductID=groups.ID ORDER BY products.ProductID DESC , products.ProductAutoID DESC");
             //$countQuery = $db->getColumn("SELECT COUNT(ProductAutoID) FROM products");
             foreach ($query as $items) {
@@ -107,8 +264,6 @@ switch ($operation) {
             echo $result;
         }
         break;
-
     default:
-
         break;
 }

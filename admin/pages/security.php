@@ -69,10 +69,6 @@ $db = new db;
                             Finans
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= $authorityTwo ?>" href="income.php">Kazanç</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item <?= $authorityTwo ?>" href="z-report.php">Z Raporu</a></li>
                         </ul>
                     </li>
@@ -94,6 +90,10 @@ $db = new db;
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                 <li><a class="dropdown-item" href="../process-return/session-destroy.php">Çıkış Yap</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item <?= $authorityOne ?><?= $authorityTwo ?>" href="interface-customize.php">Özelleştir</a></li>
                             </ul>
                         </li>
                     </div>
@@ -101,16 +101,201 @@ $db = new db;
             </div>
         </div>
     </nav>
-
-    <h1>güvenlik</h1>
-
+    <div class="container-fluid mt-2">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="alert alert-warning mt-4 mb-5 text-center" role="alert">
+                    <div style="font-size: 20px;">Panelden IP Engelleyebilir. Engellemeleri Kaldırabilirsiniz.</div>
+                </div>
+                <div class="card mt-3 p-5 bg-light">
+                    <form id="blockedIpAddForm" method="POST">
+                        <div class="mb-2 row">
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="blockedIP" name="blockedIP" placeholder="Engellenecek IP Adresini Girin" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div id="resultAdd"></div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-md-10 ">
+                                <button type="submit" id="blockedIPAdd" name="blockedIPAdd" class="btn btn-success btn-lg mt-3">Kara Listeye Ekle</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr />
+                    <form id="blockedIpRemoveForm" method="POST">
+                        <div class="mb-2 mt-3 row">
+                            <div class="col-sm-10">
+                                <select class="form-select" id="RemoveBlockedIpSelect" name="RemoveBlockedIpSelect" aria-label="Default select example">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div id="resultRemove"></div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-md-10 ">
+                                <button type="submit" id="removeBlockedIP" name="removeBlockedIP" class="btn btn-primary btn-lg mt-3">Kara Listeden Çıkar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <div class="alert alert-primary mt-4 mb-5 text-center" role="alert">
+                    <div id="records" style="font-size: 20px;"></div>
+                </div>
+                <div style="height:399px;overflow-y:auto;" class="card bg-light">
+                    <section>
+                        <div class="box-container text-center">
+                            <div class="container-fluid p-5 fs-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">IP Adresi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="blockedIpResult"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container mt-5"></div>
-
+    <div id="toastOrder" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <div id="toast" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
-
     <script src="../../assets/jquery-3-5-1.js"></script>
     <?php require_once '../js/global-message-notification.php' ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['blockedIPAdd'])) {
+    $blockedIP = security('blockedIP');
+    if (empty($blockedIP)) {
+        echo "
+        <script>
+        document.getElementById('resultAdd').innerHTML = '<div class=\"alert alert-warning mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">Lütfen Giriş Birimini Doldurun</div></div>';
+        function ResultRemove() {
+        document.getElementById('resultAdd').innerHTML = '';
+        }
+        setTimeout(ResultRemove, 6000);
+        </script>";
+    } else {
+        if (!filter_var($blockedIP, FILTER_VALIDATE_IP)) {
+            echo "
+            <script>
+            document.getElementById('resultAdd').innerHTML = '<div class=\"alert alert-danger mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">Bu Geçerli bir IP Adresi Değil</div></div>';
+            function ResultRemove() {
+            document.getElementById('resultAdd').innerHTML = '';
+            }
+            setTimeout(ResultRemove, 6000);
+            </script>
+            ";
+        } else {
+            $isIP = $db->getColumn("SELECT blockedIp FROM blockIP WHERE blockedIp=?", [$blockedIP]);
+            if ($isIP) {
+                echo "
+            <script>
+            document.getElementById('resultAdd').innerHTML = '<div class=\"alert alert-warning mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">Bu IP Adresi Zaten Kara Listede Kayıtlı</div></div>';
+            function ResultRemove() {
+            document.getElementById('resultAdd').innerHTML = '';
+            }
+            setTimeout(ResultRemove, 6000);
+            </script>
+            ";
+            } else {
+                $query = $db->insert("INSERT INTO blockIP(blockedIp) VALUES (?)", [$blockedIP]);
+                if ($query) {
+                    echo "
+            <script>
+            document.getElementById('resultAdd').innerHTML = '<div class=\"alert alert-success mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">IP Kara Listeye Başarı İle Eklendi</div></div>';
+            function ResultRemove() {
+            document.getElementById('resultAdd').innerHTML = '';
+            }
+            setTimeout(ResultRemove, 6000);
+            </script>";
+                } else {
+                    echo "
+            <script>
+            document.getElementById('resultAdd').innerHTML = '<div class=\"alert alert-danger mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">IP Kara Listeye Eklenemedi</div></div>';
+            function ResultRemove() {
+            document.getElementById('resultAdd').innerHTML = '';
+            }
+            setTimeout(ResultRemove, 6000);
+            </script>";
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+if (isset($_POST['removeBlockedIP'])) {
+    $RemoveBlockedIpSelect = security('RemoveBlockedIpSelect');
+    if (empty($RemoveBlockedIpSelect) || $RemoveBlockedIpSelect == 0) {
+        echo "
+        <script>
+        document.getElementById('resultRemove').innerHTML = '<div class=\"alert alert-warning mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">Lütfen Giriş Birimini Doldurun</div></div>';
+        function ResultRemove() {
+        document.getElementById('resultRemove').innerHTML = '';
+        }
+        setTimeout(ResultRemove, 6000);
+        </script>";
+    } else {
+        $deleteBlocedIp = $db->delete("DELETE FROM blockIP WHERE blockedIpID=?", [$RemoveBlockedIpSelect]);
+        if ($deleteBlocedIp) {
+            echo "
+            <script>
+            document.getElementById('resultRemove').innerHTML = '<div class=\"alert alert-success mt-4 mb-2 text-center\" role=\"alert\"><div style=\"font-size: 20px;\">IP Adresi Başarı İle Kara Listeden Kaldırıldı.</div></div>';
+            function ResultRemove() {
+            document.getElementById('resultRemove').innerHTML = '';
+            }
+            setTimeout(ResultRemove, 6000);
+            </script>";
+        }
+    }
+}
+
+
+
+$query = $db->getRows("SELECT * FROM blockIP ORDER BY blockedIpID DESC");
+$tableResult = "";
+foreach ($query as $items) {
+    $tableResult .= '<tr><th scope="row">' . $items->blockedIpID . '</th><td>' . $items->blockedIp . '</td></tr>';
+}
+echo '<script>document.getElementById("blockedIpResult").innerHTML = \'' . $tableResult . ' \';</script>';
+$records = $db->getColumn("SELECT COUNT(blockedIpID) FROM blockIP");
+if ($records < 1) {
+    echo '<script>document.getElementById("records").innerHTML = \'Engellenmiş IP Adresi Yok\';</script>';
+} else {
+    echo '<script>document.getElementById("records").innerHTML = \'Engelli IP ler - ' . $records . ' adet\';</script>';
+}
+$blockedIpSelect = '<option disabled selected value="0">Engeli Kaldırılacak Ip Adresini Seçin</option>';
+$blockedSelectQuery = $db->getRows("SELECT * FROM blockIP ORDER BY blockedIpID DESC");
+foreach ($blockedSelectQuery as $items) {
+    $blockedIpSelect .= '<option value="' . $items->blockedIpID . '">' . $items->blockedIp . '</option> ';
+}
+echo '<script>document.getElementById("RemoveBlockedIpSelect").innerHTML = \' ' . $blockedIpSelect . ' \';</script>';
+?>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>

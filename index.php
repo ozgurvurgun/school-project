@@ -2,6 +2,8 @@
 require_once 'DB/database.php';
 
 use dejavu_hookah\db\Database as db;
+
+$db = new db;
 ?>
 
 <!DOCTYPE html>
@@ -10,23 +12,64 @@ use dejavu_hookah\db\Database as db;
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no" />
   <link rel="icon" href="images/logo-images/icons/smoking-solid.svg" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!--bootstrap css start-->
   <!--bootstrap css end-->
   <link rel="stylesheet" href="styles/style.css" />
   <title>Dejavu Hookah</title>
+  <style>
+    :root {
+      --main-color: #e84242;
+      --black-color: #0e0e0e;
+      --border: 0.1rem solid rgba(255, 255, 255, 0.4);
+      --back-color: <?php
+                    $query = $db->getRow('SELECT InterfaceColor FROM interfaceData WHERE interfaceDataID=?', [1]);
+                    echo $query->InterfaceColor;
+                    ?>;
+    }
+
+    /* home start */
+    .home {
+      min-height: 100vh;
+      background: url(images/interface-images/interface-photo.png) no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin-top: -14.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .home .content {
+      max-width: 60rem;
+    }
+
+    .home .content h3 {
+      font-size: 6rem;
+      color: #fff;
+    }
+
+    .home .content p {
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1.8;
+      padding: 1rem 0;
+      color: #ccc;
+    }
+
+    /* home end */
+  </style>
 </head>
 
 <body>
   <!-- header start -->
   <header class="header">
     <a href="javascript:void(0)" class="logo">
-      <img src="images/logo-images/dejavu-fococlipping-standard.png" alt="logo" />
+      <img src="images/interface-images/interface-logo.png" alt="logo" />
     </a>
     <nav class="navbar">
-      <a href="https://ozgurvurgun.com/dejavu_hookah/?table=<?= $_GET['table'] ?>">Gruplar</a>
+      <a href="https://ozgurvurgun.com/dejavu_hookah/?table=<?= $_GET['table'] ?>">Kategoriler</a>
       <a href="https://ozgurvurgun.com/dejavu_hookah/pages/contact.php?table=<?= $_GET['table'] ?>">İletişim</a>
     </nav>
     <div class="buttons">
@@ -66,11 +109,15 @@ use dejavu_hookah\db\Database as db;
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12509.690116774513!2d27.174708999999996!3d38.385478400000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b962008df5f553%3A0x43d9912a7a1c582a!2zQnVjYSwgRHVtbHVwxLFuYXIsIDM1NDAwIEJ1Y2EgT3NiL0J1Y2EvxLB6bWly!5e0!3m2!1str!2str!4v1665444363002!5m2!1str!2str"
         loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe> -->
-          <form>
+          <form id="orderForm" method="POST">
             <h3>Notunuz</h3>
             <div class="inputBox">
               <i class="fa-solid fa-pencil"></i>
-              <textarea style="background-color:#0e0e0e;color:#fff;" class="cart-message" name="" rows="5" placeholder="" id=""></textarea>
+              <input style="display: none;" type="text" id="orderContents" name="orderContents">
+              <input style="display: none;" type="text" id="tableNo" name="tableNo">
+              <input style="display: none;" type="text" id="orderAmount" name="orderAmount">
+              <input style="display: none;" type="text" id="IP" name="IP">
+              <textarea style="background-color:#0e0e0e;color:#fff;" class="cart-message" name="orderMessage" rows="5" placeholder="" id="orderMessage"></textarea>
             </div>
           </form>
         </div>
@@ -84,22 +131,29 @@ use dejavu_hookah\db\Database as db;
   <!-- home start -->
   <section class="home">
     <div class="content">
-      <h3>Dejavu Hookah</h3>
+      <h3>
+        <?php
+        $query = $db->getRow('SELECT CompanyName FROM interfaceData WHERE interfaceDataID=?', [1]);
+        echo $query->CompanyName;
+        ?>
+      </h3>
       <p>
-        Ağzının tadını bilenlerin tercihi...
+        <?php
+        $query = $db->getRow('SELECT slogan FROM interfaceData WHERE interfaceDataID=?', [1]);
+        echo $query->slogan;
+        ?>
       </p>
-      <a href="#gruplar" class="btn">Sipariş Ver</a>
+      <a href="#category" class="btn">Sipariş Ver</a>
     </div>
   </section>
   <!-- home end -->
 
   <!-- products start -->
 
-  <section class="products" id="gruplar">
-    <h1 class="heading">grup <span>seç</span></h1>
+  <section class="products" id="category">
+    <h1 class="heading">kategori <span>seç</span></h1>
     <div class="box-container">
       <?php
-      $db = new db;
       $query = $db->getRows('SELECT * FROM groups WHERE GroupActivity=? ORDER BY ID DESC', ["A"]);
       foreach ($query as $items) { ?>
         <div class="box dark-bg">
@@ -133,56 +187,7 @@ use dejavu_hookah\db\Database as db;
   <!-- products end -->
 
   <!-- review start -->
-  <section class="review">
-    <h1 class="heading">dejavu <span>severler</span></h1>
-    <div class="box-container">
-      <div class="box">
-        <img src="images/quote.png" alt="quote">
-        <p> Daha önce böyle aroması güzel bir nargile İçmemiştim. Üstelik patron velat bey de
-          çok profeysonel İşinin ehli güler yüzlü birisi. başarılarınızın devamını dilerim :)
-        </p>
-        <img src="images/avatar-1.png" alt="user" class="user">
-        <h3>velat tezel</h3>
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      </div>
-      <div class="box">
-        <img src="images/quote.png" alt="quote">
-        <p> Daha önce böyle aroması güzel bir nargile İçmemiştim. Üstelik patron velat bey de
-          çok profeysonel İşinin ehli güler yüzlü birisi. başarılarınızın devamını dilerim :)
-        </p>
-        <img src="images/avatar-2.png" alt="user" class="user">
-        <h3>özgür vurgun</h3>
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      </div>
-      <div class="box">
-        <img src="images/quote.png" alt="quote">
-        <p> Daha önce böyle aroması güzel bir nargile İçmemiştim. Üstelik patron velat bey de
-          çok profeysonel İşinin ehli güler yüzlü birisi. başarılarınızın devamını dilerim :)
-        </p>
-        <img src="images/avatar-3.png" alt="user" class="user">
-        <h3>serhat serhat</h3>
-        <div class="stars">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-        </div>
-      </div>
-    </div>
-  </section>
+
   <!-- review end -->
 
   <!-- footer start -->
@@ -192,9 +197,15 @@ use dejavu_hookah\db\Database as db;
       <button class="btn btn-primary">search</button>
     </div> -->
     <div class="share">
-      <a href="#" class="fab fa-facebook"></a>
-      <a href="#" class="fab fa-twitter"></a>
-      <a href="#" class="fab fa-instagram"></a>
+      <a href="<?php $query = $db->getRow('SELECT FacebookURL FROM interfaceData WHERE interfaceDataID=?', [1]);
+                echo $query->FacebookURL; ?>" class="fab fa-facebook">
+      </a>
+      <a href="<?php $query = $db->getRow('SELECT TwitterURL FROM interfaceData WHERE interfaceDataID=?', [1]);
+                echo $query->TwitterURL; ?>" class="fab fa-twitter">
+      </a>
+      <a href="<?php $query = $db->getRow('SELECT InstagramURL FROM interfaceData WHERE interfaceDataID=?', [1]);
+                echo $query->InstagramURL; ?>" class="fab fa-instagram">
+      </a>
     </div>
     <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
   </section>
@@ -209,6 +220,7 @@ use dejavu_hookah\db\Database as db;
   <script src="js/response.js"></script>
   <script src="js/script.js"></script>
   <script src="js/onloadGetValue.js"></script>
+  <script src="assets/jquery-3-5-1.js"></script>
   <!-- <script src="js/modal.js"></script> -->
 
   <script>
@@ -246,13 +258,25 @@ use dejavu_hookah\db\Database as db;
         let totalPrice = localStorage.getItem("totalPrice");
         for (let index = 0; index < products.length; index++) {
           if (localStorage.getItem(products[index] + "-" + "number") >= 1) {
-            let a = localStorage.getItem(products[index] + "-" + "number");
-            let b = localStorage.getItem(products[index] + "-" + "name");
-            totalOrder.push(a + " ADET " + b);
+            let x = localStorage.getItem(products[index] + "-" + "number");
+            let a = products[index];
+            //let b = localStorage.getItem(products[index] + "-" + "name");
+            totalOrder.push(" " + x + " ADET " + a);
           }
         }
+        document.getElementById("orderContents").value = totalOrder;
+        document.getElementById("tableNo").value = <?= $_GET["table"] ?>;
+        document.getElementById("orderAmount").value = totalPrice;
+        document.getElementById("IP").value = "<?= $_SERVER["REMOTE_ADDR"] ?>";
         if (confirm(totalOrder + " TUTAR = " + totalPrice + " TL SİPARİŞİNİZ DOĞRU İSE ONAYLAYIN")) {
-          alert("SIPARISINI ALDIK EN KISA ZAMANDA MASANDA OLACAK :)");
+          $.ajax({
+            type: 'POST',
+            url: 'admin/process-return/add-order-return.php',
+            data: $('#orderForm').serialize(),
+            success: function(data) {
+              alert(data);
+            }
+          });
           localStorage.clear();
           sessionStorage.clear();
           total_price_total_number();

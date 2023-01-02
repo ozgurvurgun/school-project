@@ -12,6 +12,17 @@
     }
     window.onload = counter();
 
+    function orderCounter() {
+        $.ajax({
+            type: 'POST',
+            url: '../process-return/orderTableCount.php',
+            success: function(data) {
+                sessionStorage.setItem('orderCount', data);
+            }
+        });
+    }
+    window.onload = orderCounter();
+
     function RemoveAll(Operation, ID) {
         if (confirm('Kaydı silmek istediğinizden emin misiniz ?')) {
             $.get(SITE_URL + 'admin/process-return/delete-message-return.php?page=' + Operation, {
@@ -20,7 +31,7 @@
                 data = data.split(":::", 2);
                 let message = data[0];
                 let mistake = data[1];
-                 alert(message);
+                alert(message);
                 if (mistake == "success") {
                     $("#" + ID).remove();
                     counter();
@@ -58,5 +69,27 @@
     const myToastEl = document.getElementById('toast')
     myToastEl.addEventListener('hidden.bs.toast', () => {
         document.getElementById('notificationMusic').innerHTML = '';
+    });
+    <?php $countOrder = $db->getColumn("SELECT COUNT(orderID) FROM orderTable"); ?>
+    setInterval(function orderNotification() {
+        $.ajax({
+            type: 'POST',
+            url: '../process-return/order-notification.php?page=<?= $countOrder ?>',
+            success: function(data) {
+                data = data.split(":::", 3);
+                let message = data[0];
+                let message2 = data[1];
+                let message3 = data[2];
+                $('#orderTableResult').html(message);
+                orderCounter();
+                if (Number(sessionStorage.getItem('orderCount')) < Number(message3)) {
+                    $('#toastOrder').html(message2);
+                }
+            }
+        });
+    }, 6000);
+    const myToastEl2 = document.getElementById('toastOrder')
+    myToastEl2.addEventListener('hidden.bs.toast', () => {
+        document.getElementById('orderNotification').innerHTML = '';
     });
 </script>
