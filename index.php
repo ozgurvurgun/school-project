@@ -4,6 +4,7 @@ require_once 'DB/database.php';
 use dejavu_hookah\db\Database as db;
 
 $db = new db;
+$queryAutomation = $db->getRow('SELECT selectValue FROM menuOrAutomation');
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +13,23 @@ $db = new db;
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="noindex">
+  <meta name="googlebot" content="noindex">
   <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no" />
-  <link rel="icon" href="images/logo-images/icons/smoking-solid.svg" type="image/x-icon" />
+  <link rel="icon" href="images/logo-images/icons/emoji-smile.svg" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!--bootstrap css start-->
   <!--bootstrap css end-->
   <link rel="stylesheet" href="styles/style.css" />
-  <title>Dejavu Hookah</title>
+  <title><?php
+          $query = $db->getRow('SELECT CompanyName FROM interfaceData WHERE interfaceDataID=?', [1]);
+          echo $query->CompanyName;
+          ?></title>
   <style>
+    body {
+      touch-action: pan-y;
+    }
+
     :root {
       --main-color: #e84242;
       --black-color: #0e0e0e;
@@ -74,9 +84,13 @@ $db = new db;
     </nav>
     <div class="buttons">
       <button name="siparis" id="cart-btn">
-        <i class="fas fa-shopping-cart shop-sepet">
-          <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
-        </i>
+        <?php
+        if ($queryAutomation->selectValue == 1) { ?>
+          <i class="fas fa-shopping-cart shop-sepet">
+            <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
+          </i>
+        <?php }
+        ?>
       </button>
       <button id="menu-btn">
         <i class="fas fa-bars"></i>
@@ -143,7 +157,13 @@ $db = new db;
         echo $query->slogan;
         ?>
       </p>
-      <a href="#category" class="btn">Sipariş Ver</a>
+      <?php
+      if ($queryAutomation->selectValue == 1) { ?>
+        <a href="#category" class="btn">Sipariş Ver</a>
+      <?php } else { ?>
+        <a href="#category" class="btn">Menüye Git</a>
+      <?php  }
+      ?>
     </div>
   </section>
   <!-- home end -->
@@ -259,8 +279,7 @@ $db = new db;
         for (let index = 0; index < products.length; index++) {
           if (localStorage.getItem(products[index] + "-" + "number") >= 1) {
             let x = localStorage.getItem(products[index] + "-" + "number");
-            let a = products[index];
-            //let b = localStorage.getItem(products[index] + "-" + "name");
+            let a = localStorage.getItem(products[index] + "-" + "name");
             totalOrder.push(" " + x + " ADET " + a);
           }
         }

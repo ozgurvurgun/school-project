@@ -25,7 +25,10 @@ $db = new db;
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/logo-images/icons/person-gear.svg" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../admin-style/style.css">
@@ -82,6 +85,14 @@ $db = new db;
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="message.php">Gelen Kutusu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border rounded" aria-current="page" href="javascript:void(0);">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" onchange="switchChange();" type="checkbox" role="switch" id="switchChecked">
+                                <label class="form-check-label" id="switch-result"></label>
+                            </div>
+                        </a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right me-2">
@@ -248,4 +259,27 @@ $db = new db;
             }
         });
     });
+    <?php
+    $queryAutomation = $db->getRow('SELECT selectValue FROM menuOrAutomation');
+    ?>
+    if (<?= $queryAutomation->selectValue ?> == 1) {
+        document.getElementById('switchChecked').checked = true;
+        document.getElementById('switch-result').innerHTML = 'Otomasyon';
+    }
+    else{
+        document.getElementById('switchChecked').checked = false;
+        document.getElementById('switch-result').innerHTML = 'Menü';
+    }
+    function switchChange() {
+        let x, check;
+        x = document.getElementById('switchChecked');
+        check = x.checked;
+        $.ajax({
+            type: 'POST',
+            url: '../process-return/menu-or-automation.php?data=' + check,
+            success: function(data) {
+                document.getElementById('switch-result').innerHTML = data;
+            }
+        });
+    }
 </script>

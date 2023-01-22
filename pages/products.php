@@ -10,6 +10,8 @@ if (isset($_GET["table"], $_GET["groupId"])) {
 } else {
     //die("Access Denied");
 }
+$queryAutomation = $db->getRow('SELECT selectValue FROM menuOrAutomation');
+$query->selectValue;
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -17,14 +19,23 @@ if (isset($_GET["table"], $_GET["groupId"])) {
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no" />
-    <link rel="icon" href="../images/logo-images/icons/smoking-solid.svg" type="image/x-icon" />
+    <link rel="icon" href="../images/logo-images/icons/emoji-smile.svg" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--bootstrap css start-->
     <!--bootstrap css end-->
     <link rel="stylesheet" href="../styles/style.css" />
-    <title>Dejavu Hookah</title>
+    <title><?php
+            $query = $db->getRow('SELECT CompanyName FROM interfaceData WHERE interfaceDataID=?', [1]);
+            echo $query->CompanyName;
+            ?></title>
     <style>
+        body {
+            touch-action: pan-y;
+        }
+
         :root {
             --main-color: #e84242;
             --black-color: #0e0e0e;
@@ -49,9 +60,13 @@ if (isset($_GET["table"], $_GET["groupId"])) {
         </nav>
         <div class="buttons">
             <button id="cart-btn">
-                <i class="fas fa-shopping-cart shop-sepet">
-                    <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item item-count"></span>
-                </i>
+                <?php
+                if ($queryAutomation->selectValue == 1) { ?>
+                    <i class="fas fa-shopping-cart shop-sepet">
+                        <span style="color: #e84242; font-size: 2.3rem;" id="item-count" class="shopping-item"></span>
+                    </i>
+                <?php }
+                ?>
             </button>
             <button id="menu-btn">
                 <i class="fas fa-bars"></i>
@@ -127,9 +142,12 @@ if (isset($_GET["table"], $_GET["groupId"])) {
                         <h3><?= $items->ProductName ?></h3>
                         <div class="price"><span id="<?= $items->GroupStorageName ?>-<?= $items->ProductStorageName ?>-price"><?= $items->ProductPrice ?></span>₺&nbsp;<span class="span"><?= $items->ProductDiscountPrice ?>₺</span></div>
                     </div>
-                    <div class="box-bottom">
-                        <button type="button" id="<?= $items->GroupStorageName ?>-<?= $items->ProductStorageName ?>-add" class="btn">sepete ekle</button>
-                    </div>
+                    <?php
+                    if ($queryAutomation->selectValue == 1) { ?>
+                        <div class="box-bottom">
+                            <button type="button" id="<?= $items->GroupStorageName ?>-<?= $items->ProductStorageName ?>-add" class="btn">sepete ekle</button>
+                        </div>
+                    <?php } ?>
                 </div>
             <?php  }  ?>
         </div>
@@ -146,13 +164,13 @@ if (isset($_GET["table"], $_GET["groupId"])) {
     </div> -->
         <div class="share">
             <a href="<?php $query = $db->getRow('SELECT FacebookURL FROM interfaceData WHERE interfaceDataID=?', [1]);
-                                        echo $query->FacebookURL; ?>" class="fab fa-facebook">
+                        echo $query->FacebookURL; ?>" class="fab fa-facebook">
             </a>
             <a href="<?php $query = $db->getRow('SELECT TwitterURL FROM interfaceData WHERE interfaceDataID=?', [1]);
-                                        echo $query->TwitterURL; ?>" class="fab fa-twitter">
+                        echo $query->TwitterURL; ?>" class="fab fa-twitter">
             </a>
             <a href="<?php $query = $db->getRow('SELECT InstagramURL FROM interfaceData WHERE interfaceDataID=?', [1]);
-                                        echo $query->InstagramURL; ?>" class="fab fa-instagram">
+                        echo $query->InstagramURL; ?>" class="fab fa-instagram">
             </a>
         </div>
         <div class="credit">created by <span>Özgür Vurgun</span> | all rights reserved</div>
@@ -204,8 +222,7 @@ if (isset($_GET["table"], $_GET["groupId"])) {
                 for (let index = 0; index < products.length; index++) {
                     if (localStorage.getItem(products[index] + "-" + "number") >= 1) {
                         let x = localStorage.getItem(products[index] + "-" + "number");
-                        let a = products[index];
-                        //let b = localStorage.getItem(products[index] + "-" + "name");
+                        let a = localStorage.getItem(products[index] + "-" + "name");
                         totalOrder.push(" " + x + " ADET " + a);
                     }
                 }

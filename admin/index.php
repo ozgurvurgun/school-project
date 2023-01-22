@@ -18,6 +18,9 @@ $db = new db;
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+    <link rel="icon" href="../images/logo-images/icons/person-gear.svg" type="image/x-icon" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->

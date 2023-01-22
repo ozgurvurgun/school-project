@@ -25,7 +25,10 @@ $db = new db;
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/logo-images/icons/person-gear.svg" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Admin Panel</title>
 </head>
@@ -80,6 +83,14 @@ $db = new db;
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="message.php">Gelen Kutusu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border rounded" aria-current="page" href="javascript:void(0);">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" onchange="switchChange();" type="checkbox" role="switch" id="switchChecked">
+                                <label class="form-check-label" id="switch-result"></label>
+                            </div>
+                        </a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right me-2">
